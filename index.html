@@ -332,6 +332,7 @@
     .cursor,.cursor-ring { display:none; }
   }
 </style>
+<script src="https://tally.so/widgets/embed.js"></script>
 </head>
 <body>
 
@@ -587,9 +588,9 @@
       Fill in the form below and we'll be in touch within 24 hours. Tell us a little about your business and where your time is going — we'll take it from there, async all the way.
     </p>
 
-    <!-- Tally inline embed -->
+    <!-- Tally iframe embed -->
     <div class="reveal reveal-delay-3" style="max-width:560px;margin:0 auto 20px;">
-      <div data-tally-src="https://tally.so/embed/PdEEV5?hideTitle=1&transparentBackground=1&dynamicHeight=1" data-tally-width="100%" data-tally-emoji-text="👋" data-tally-emoji-animation="wave"></div>
+      <iframe data-tally-src="https://tally.so/embed/PdEEV5?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="753" frameborder="0" marginheight="0" marginwidth="0" title="New Client"></iframe>
     </div>
 
     <p class="cta-note reveal reveal-delay-4">Free workflow audit · No calls needed · Response within 24 hours</p>
@@ -639,8 +640,7 @@
   }, { threshold: 0.1 });
   reveals.forEach(el => observer.observe(el));
 
-  // Load Tally embed script
-  var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w;s.onload=v;s.onerror=v;d.body.appendChild(s);}
+  Tally.loadEmbeds();
 </script>
 </body>
 </html>
