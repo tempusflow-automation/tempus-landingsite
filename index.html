@@ -277,6 +277,38 @@
   .trust-title { font-family:'Clash Display',sans-serif; font-size:13px; font-weight:700; color:var(--text); margin-bottom:6px; }
   .trust-body { font-size:11px; color:var(--muted); line-height:1.75; }
 
+  /* LEAD MAGNET */
+  .leadmagnet-section { padding:120px 0; border-top:1px solid var(--border); }
+  .leadmagnet-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+  .lm-eyebrow { font-family:'Barlow Condensed',sans-serif; font-size:10px; letter-spacing:0.3em; text-transform:uppercase; color:var(--accent); margin-bottom:20px; display:flex; align-items:center; gap:12px; }
+  .lm-eyebrow::before { content:''; width:24px; height:1px; background:var(--accent); }
+  .lm-heading { font-family:'Clash Display',sans-serif; font-size:clamp(36px,4vw,56px); font-weight:600; line-height:1.05; letter-spacing:-0.02em; margin-bottom:4px; }
+  .lm-heading-free { font-family:'Clash Display',sans-serif; font-size:clamp(36px,4vw,56px); font-weight:600; line-height:1.05; letter-spacing:-0.02em; color:var(--accent); margin-bottom:24px; font-style:italic; }
+  .lm-desc { font-family:'Chivo',sans-serif; font-size:13px; color:var(--muted2); line-height:1.85; margin-bottom:28px; }
+  .lm-features { list-style:none; display:flex; flex-direction:column; gap:10px; }
+  .lm-features li { display:flex; align-items:flex-start; gap:10px; font-family:'Chivo',sans-serif; font-size:12px; color:var(--muted2); line-height:1.6; }
+  .lm-features li::before { content:'—'; color:var(--accent); flex-shrink:0; }
+  .lm-card { background:var(--card); border:1px solid var(--border2); padding:40px; position:relative; overflow:hidden; }
+  .lm-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(to right,var(--accent),var(--accent2)); }
+  .lm-card-eyebrow { font-family:'Barlow Condensed',sans-serif; font-size:9px; font-weight:600; letter-spacing:0.28em; text-transform:uppercase; color:var(--accent); margin-bottom:16px; }
+  .lm-card-heading { font-family:'Clash Display',sans-serif; font-size:26px; font-weight:600; color:var(--white); letter-spacing:-0.01em; margin-bottom:8px; }
+  .lm-card-sub { font-family:'Chivo',sans-serif; font-size:12px; color:var(--muted2); line-height:1.7; margin-bottom:28px; }
+  .lm-input { width:100%; background:var(--card2); border:1px solid var(--border2); color:var(--text); font-family:'Chivo',sans-serif; font-size:13px; padding:14px 16px; outline:none; margin-bottom:12px; transition:border-color 0.2s; }
+  .lm-input:focus { border-color:rgba(78,255,214,0.5); }
+  .lm-input::placeholder { color:var(--muted); }
+  .lm-btn { width:100%; font-family:'Barlow Condensed',sans-serif; font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:var(--midnight); background:var(--accent); padding:16px 24px; border:none; cursor:pointer; transition:background 0.2s,box-shadow 0.2s; display:flex; align-items:center; justify-content:center; gap:8px; }
+  .lm-btn:hover { background:#6fffe3; box-shadow:0 0 24px rgba(78,255,214,0.3); }
+  .lm-btn:disabled { opacity:0.6; cursor:not-allowed; }
+  .lm-upsell { margin-top:16px; text-align:center; font-family:'Chivo',sans-serif; font-size:11px; color:var(--muted); }
+  .lm-upsell a { color:var(--accent); text-decoration:none; font-weight:500; }
+  .lm-upsell a:hover { text-decoration:underline; }
+  .lm-success { display:none; text-align:center; padding:24px 0; }
+  .lm-success-icon { font-size:36px; margin-bottom:12px; }
+  .lm-success-msg { font-family:'Clash Display',sans-serif; font-size:20px; font-weight:600; color:var(--accent); margin-bottom:8px; }
+  .lm-success-sub { font-family:'Chivo',sans-serif; font-size:12px; color:var(--muted2); }
+  .lm-error { font-family:'Chivo',sans-serif; font-size:11px; color:#ff6b6b; margin-top:8px; display:none; }
+  @media (max-width:768px) { .leadmagnet-grid { grid-template-columns:1fr; gap:48px; } }
+
   /* CTA */
   .cta-section { padding:140px 0; border-top:1px solid var(--border); text-align:center; }
   .cta-inner { max-width:680px; margin:0 auto; padding:0 48px; }
@@ -624,6 +656,46 @@
   </div>
 </section>
 
+<!-- LEAD MAGNET -->
+<section class="leadmagnet-section" id="free-guide">
+  <div class="section-inner">
+    <div class="leadmagnet-grid">
+      <div>
+        <div class="lm-eyebrow reveal">Free Guide</div>
+        <h2 class="lm-heading reveal reveal-delay-1">The Automation Audit.</h2>
+        <div class="lm-heading-free reveal reveal-delay-1">Free.</div>
+        <p class="lm-desc reveal reveal-delay-2">7 workflows every freelancer and consultant should automate this week. Includes a scored audit, ROI calculator, Before/After comparisons, and step-by-step Make.com build instructions.</p>
+        <ul class="lm-features reveal reveal-delay-3">
+          <li>Automation Audit Scorecard</li>
+          <li>ROI formula with worked example</li>
+          <li>7 workflow build guides</li>
+          <li>Pro Tips for each workflow</li>
+        </ul>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <div class="lm-card">
+          <div class="lm-card-eyebrow">Get instant access</div>
+          <div class="lm-card-heading">Download the free guide</div>
+          <p class="lm-card-sub">Enter your email and the PDF downloads instantly. No spam. No sequences. Just the guide.</p>
+          <div id="lm-form-wrap">
+            <input type="email" class="lm-input" id="lm-email" placeholder="your@email.com" required>
+            <div class="lm-error" id="lm-error">Please enter a valid email address.</div>
+            <button class="lm-btn" id="lm-btn" onclick="handleGuideDownload()">
+              ↓ &nbsp;Download Free Guide
+            </button>
+          </div>
+          <div class="lm-success" id="lm-success">
+            <div class="lm-success-icon">✦</div>
+            <div class="lm-success-msg">Your download is starting.</div>
+            <p class="lm-success-sub">Check your downloads folder for the guide.</p>
+          </div>
+          <p class="lm-upsell">Ready to go further? <a href="#contact">Get a free workflow audit →</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- CTA -->
 <section class="cta-section" id="contact">
   <div class="cta-inner">
@@ -679,6 +751,49 @@
   reveals.forEach(el => observer.observe(el));
 
   Tally.loadEmbeds();
+
+  async function handleGuideDownload() {
+    const emailInput = document.getElementById('lm-email');
+    const btn = document.getElementById('lm-btn');
+    const errorEl = document.getElementById('lm-error');
+    const formWrap = document.getElementById('lm-form-wrap');
+    const successEl = document.getElementById('lm-success');
+    const email = emailInput.value.trim();
+
+    errorEl.style.display = 'none';
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errorEl.style.display = 'block';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    const MAKE_WEBHOOK = 'MAKE_WEBHOOK_URL_HERE';
+    try {
+      await fetch(MAKE_WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: email,
+          source: 'Automation Audit Guide',
+          submittedAt: new Date().toISOString()
+        })
+      });
+    } catch (e) {
+      console.error('Webhook capture failed:', e);
+    }
+
+    const link = document.createElement('a');
+    link.href = './The_Automation_Audit_Free_Guide.pdf';
+    link.download = 'The_Automation_Audit_Free_Guide.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    formWrap.style.display = 'none';
+    successEl.style.display = 'block';
+  }
 </script>
 </body>
 </html>
