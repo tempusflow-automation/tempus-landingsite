@@ -120,7 +120,7 @@ const Hero = () => {
             fontSize: 'clamp(16px, 1.4vw, 19px)', lineHeight: 1.65,
             color: 'var(--muted2)', maxWidth: 560
           }}>
-            Done-for-you automations for Australian SMBs. Built in 
+            Done-for-you automations for Australian SMBs. Built in{' '}
             <strong style={{ color: 'var(--cloud)', fontWeight: 500 }}>your</strong> account. Yours forever.
             No discovery calls. No retainer trap. A short form, a proposal
             with a Loom of the solution, one 15-minute sync — then the admin you hate, gone.
