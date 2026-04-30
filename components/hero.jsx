@@ -87,7 +87,7 @@ const Terminal = () => {
 
 const Hero = () => {
   return (
-    <section id="top" style={{ position: 'relative', minHeight: '100vh', paddingTop: 130, paddingBottom: 80, overflow: 'hidden' }}>
+    <section id="top" style={{ position: 'relative', minHeight: '100vh', paddingTop: 160, paddingBottom: 80, overflow: 'hidden' }}>
       <div className="grid-bg" />
       <div className="glow-radial-teal" style={{ width: 800, height: 800, top: -200, left: '50%', marginLeft: -400, opacity: .8, animation: 'drift1 18s ease-in-out infinite' }} />
       <div className="glow-radial-violet" style={{ width: 500, height: 500, bottom: -150, right: -100, opacity: .5, animation: 'drift2 22s ease-in-out infinite' }} />
