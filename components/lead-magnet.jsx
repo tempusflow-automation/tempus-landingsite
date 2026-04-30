@@ -112,7 +112,7 @@ const LeadMagnet = () => {
             {/* Form / states */}
             {state !== 'success' ? (
               <form onSubmit={handleSubmit} noValidate>
-                <div style={{
+                <div className="lm-form-row" style={{
                   display: 'flex', alignItems: 'stretch',
                   border: `1px solid ${error ? '#ff7a7a' : 'var(--border)'}`,
                   borderRadius: 10, background: 'var(--card)',
@@ -292,8 +292,15 @@ const LeadMagnet = () => {
 
       <style>{`
         @media (max-width: 900px) {
-          .lm-grid { grid-template-columns: 1fr !important; padding: 40px 28px !important; gap: 40px !important; }
+          .lm-grid { grid-template-columns: 1fr !important; padding: 40px 24px !important; gap: 40px !important; }
+          .lm-grid > div { min-width: 0; }
           .lm-cover { transform: none !important; max-width: 280px !important; margin: 0 auto !important; }
+        }
+        @media (max-width: 560px) {
+          .lm-grid h2.h-display { font-size: clamp(24px, 7vw, 32px) !important; line-height: 1.08 !important; }
+          .lm-form-row { flex-wrap: wrap !important; }
+          .lm-form-row input { min-width: 0 !important; }
+          .lm-form-row button { width: 100% !important; padding: 16px !important; justify-content: center; }
         }
       `}</style>
     </section>);

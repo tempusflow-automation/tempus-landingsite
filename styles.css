@@ -205,3 +205,43 @@ img { display:block; max-width:100%; }
   padding: 0 32px;
 }
 @media (max-width: 768px) { .container { padding: 0 20px; } }
+
+/* ─── Mobile overrides ─────────────────── */
+
+/* Moat: collapse scroll triggers + show all acts stacked */
+@media (max-width: 900px) {
+  .moat-trigger { display: none !important; }
+  .moat-vis-item {
+    position: relative !important;
+    inset: auto !important;
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: auto !important;
+    margin-bottom: 32px;
+  }
+  .moat-act-item {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: auto !important;
+    margin-bottom: 48px;
+  }
+  .moat-dots { display: none !important; }
+}
+
+/* Small screens: tighten section padding, buttons, container */
+@media (max-width: 560px) {
+  .container { padding: 0 16px; }
+
+  /* Reduce all section vertical padding — 140px is desktop-only */
+  section { padding-top: 72px !important; padding-bottom: 64px !important; }
+
+  .btn { padding: 12px 16px; font-size: 11px; gap: 8px; }
+  .hero-cta { align-items: flex-start !important; }
+  .hero-cta > div { justify-content: flex-start !important; }
+  .hero-cta .btn { flex: 1; justify-content: center; }
+  .field { font-size: 16px; } /* prevent iOS zoom on input focus */
+}

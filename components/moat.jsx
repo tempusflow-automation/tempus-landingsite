@@ -158,7 +158,7 @@ const Moat = () => {
                 <div className="glow-radial-teal" style={{ width:500, height:500, top:'50%', left:'50%', transform:'translate(-50%,-50%)', opacity:.5 }}/>
                 <div style={{ position:'relative' }}>
                   {MOAT_ACTS.map((a, i) => (
-                    <div key={i} style={{
+                    <div key={i} className="moat-vis-item" style={{
                       position: i === 0 ? 'relative' : 'absolute',
                       inset: 0,
                       opacity: active === i ? 1 : 0,
@@ -175,7 +175,7 @@ const Moat = () => {
               {/* Right: stacked text, only active visible */}
               <div style={{ position:'relative', minHeight: 320 }}>
                 {MOAT_ACTS.map((a, i) => (
-                  <div key={i} style={{
+                  <div key={i} className="moat-act-item" style={{
                     position: i === 0 ? 'relative' : 'absolute',
                     top: 0, left: 0, right: 0,
                     opacity: active === i ? 1 : 0,
@@ -201,7 +201,7 @@ const Moat = () => {
                 ))}
 
                 {/* progress dots */}
-                <div style={{ display:'flex', gap:8, marginTop: 36, position:'absolute', top: 'calc(100% - 12px)' }}>
+                <div className="moat-dots" style={{ display:'flex', gap:8, marginTop: 36, position:'absolute', top: 'calc(100% - 12px)' }}>
                   {MOAT_ACTS.map((_, i) => (
                     <div key={i} style={{
                       width: active === i ? 28 : 8, height: 4, borderRadius: 2,
@@ -217,7 +217,7 @@ const Moat = () => {
 
         {/* scroll triggers */}
         {MOAT_ACTS.map((_, i) => (
-          <div key={i} ref={el => refs.current[i] = el} data-idx={i} style={{ height: '90vh', position:'relative', marginTop: i === 0 ? '-100vh' : 0 }}/>
+          <div key={i} ref={el => refs.current[i] = el} data-idx={i} className="moat-trigger" style={{ height: '90vh', position:'relative', marginTop: i === 0 ? '-100vh' : 0 }}/>
         ))}
       </div>
 

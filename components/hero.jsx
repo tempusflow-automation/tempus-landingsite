@@ -125,7 +125,7 @@ const Hero = () => {
             No discovery calls. No retainer trap. A short form, a proposal
             with a Loom of the solution, one 15-minute sync — then the admin you hate, gone.
           </p>
-          <div className="rv in d2" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 16 }}>
+          <div className="rv in d2 hero-cta" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 16 }}>
             <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
               <a href="#audit" className="btn btn-primary">Request a free audit <Icon name="arrow-right" size={14} /></a>
               <a href="#pricing" className="btn btn-ghost">See pricing <Icon name="arrow-down" size={14} /></a>
