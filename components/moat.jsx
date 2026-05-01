@@ -152,38 +152,23 @@ const Moat = () => {
           background:'linear-gradient(180deg, transparent, rgba(13,20,35,0.5))',
         }}>
           <div className="container" style={{ width:'100%' }}>
-            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:60, alignItems:'center' }} className="moat-row">
-              {/* Left: rotating numerical badge */}
-              <div style={{ position:'relative', minHeight: 480, display:'flex', alignItems:'center', justifyContent:'center' }}>
-                <div className="glow-radial-teal" style={{ width:500, height:500, top:'50%', left:'50%', transform:'translate(-50%,-50%)', opacity:.5 }}/>
-                <div style={{ position:'relative' }}>
-                  {MOAT_ACTS.map((a, i) => (
-                    <div key={i} className="moat-vis-item" style={{
-                      position: i === 0 ? 'relative' : 'absolute',
-                      inset: 0,
-                      opacity: active === i ? 1 : 0,
-                      transform: active === i ? 'scale(1)' : 'scale(.96)',
-                      transition: 'opacity .5s ease, transform .5s ease',
-                      pointerEvents: active === i ? 'auto' : 'none',
-                    }}>
-                      <Visual kind={a.visual}/>
-                    </div>
-                  ))}
-                </div>
-              </div>
+            <div className="moat-row" style={{ position:'relative', maxWidth: 720, margin:'0 auto' }}>
+              <div className="glow-radial-teal" style={{ width:500, height:500, bottom:0, left:'50%', transform:'translateX(-50%)', opacity:.4 }}/>
 
-              {/* Right: stacked text, only active visible */}
-              <div style={{ position:'relative', minHeight: 320 }}>
-                {MOAT_ACTS.map((a, i) => (
-                  <div key={i} className="moat-act-item" style={{
-                    position: i === 0 ? 'relative' : 'absolute',
-                    top: 0, left: 0, right: 0,
-                    opacity: active === i ? 1 : 0,
-                    transform: active === i ? 'translateY(0)' : 'translateY(20px)',
-                    transition: 'opacity .5s ease, transform .5s ease',
-                    pointerEvents: active === i ? 'auto' : 'none',
-                  }}>
-                    <div style={{ display:'flex', alignItems:'center', gap: 14, marginBottom: 24 }}>
+              {/* Each act: text on top, visual below — layered, only active shown */}
+              {MOAT_ACTS.map((a, i) => (
+                <div key={i} className="moat-act-pair" style={{
+                  position: i === 0 ? 'relative' : 'absolute',
+                  top: 0, left: 0, right: 0,
+                  opacity: active === i ? 1 : 0,
+                  transform: active === i ? 'translateY(0)' : 'translateY(14px)',
+                  transition: 'opacity .5s ease, transform .5s ease',
+                  pointerEvents: active === i ? 'auto' : 'none',
+                  display: 'flex', flexDirection: 'column', gap: 36,
+                }}>
+                  {/* ── Text block ── */}
+                  <div className="moat-act-item">
+                    <div style={{ display:'flex', alignItems:'center', gap: 14, marginBottom: 20 }}>
                       <span style={{
                         fontFamily:'var(--f-mono)', fontSize: 13, color: a.color,
                         padding: '4px 10px', borderRadius: 4,
@@ -191,26 +176,30 @@ const Moat = () => {
                       }}>{a.n} / 03</span>
                       <span style={{ fontFamily:'var(--f-ui)', fontSize: 11, fontWeight: 700, letterSpacing:'.28em', textTransform:'uppercase', color: a.color }}>{a.kicker}</span>
                     </div>
-                    <h3 className="h-display" style={{ fontSize:'clamp(32px, 4.4vw, 60px)', marginBottom: 22 }}>
+                    <h3 className="h-display" style={{ fontSize:'clamp(30px, 4vw, 56px)', marginBottom: 18 }}>
                       {a.title}
                     </h3>
-                    <p style={{ fontFamily:'var(--f-body)', fontWeight:300, fontSize:16.5, lineHeight:1.7, color:'var(--muted2)', maxWidth: 480 }}>
+                    <p style={{ fontFamily:'var(--f-body)', fontWeight:300, fontSize:16.5, lineHeight:1.7, color:'var(--muted2)', maxWidth: 600 }}>
                       {a.body}
                     </p>
+                    {/* progress dots */}
+                    <div className="moat-dots" style={{ display:'flex', gap:8, marginTop: 24 }}>
+                      {MOAT_ACTS.map((_, j) => (
+                        <div key={j} style={{
+                          width: active === j ? 28 : 8, height: 4, borderRadius: 2,
+                          background: active === j ? 'var(--teal)' : 'var(--border2)',
+                          transition: 'all .3s ease',
+                        }}/>
+                      ))}
+                    </div>
                   </div>
-                ))}
 
-                {/* progress dots */}
-                <div className="moat-dots" style={{ display:'flex', gap:8, marginTop: 36, position:'absolute', top: 'calc(100% - 12px)' }}>
-                  {MOAT_ACTS.map((_, i) => (
-                    <div key={i} style={{
-                      width: active === i ? 28 : 8, height: 4, borderRadius: 2,
-                      background: active === i ? 'var(--teal)' : 'var(--border2)',
-                      transition: 'all .3s ease',
-                    }}/>
-                  ))}
+                  {/* ── Visual block ── */}
+                  <div className="moat-vis-item" style={{ display:'flex', alignItems:'center', justifyContent:'center' }}>
+                    <Visual kind={a.visual}/>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
@@ -223,8 +212,22 @@ const Moat = () => {
 
       <style>{`
         @media (max-width: 900px) {
-          .moat-row { grid-template-columns: 1fr !important; gap: 24px !important; }
           .moat-pin { position: relative !important; height: auto !important; }
+          .moat-row { max-width: 100% !important; }
+          .moat-act-pair {
+            position: relative !important;
+            top: auto !important; left: auto !important; right: auto !important;
+            opacity: 1 !important;
+            transform: none !important;
+            pointer-events: auto !important;
+            margin-bottom: 64px;
+            flex-direction: column !important;
+          }
+          .moat-act-pair:last-child { margin-bottom: 0; }
+          /* Text description always on top, visual always below */
+          .moat-act-pair .moat-act-item { order: 1; }
+          .moat-act-pair .moat-vis-item { order: 2; }
+          .moat-dots { display: none !important; }
         }
       `}</style>
     </section>
