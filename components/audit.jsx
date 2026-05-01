@@ -31,10 +31,7 @@ const Audit = () => {
   const sendRequest = async () => {
     setSending(true);
     try {
-      // All data (including tools) routes through Make.com.
-      // Add an Airtable module inside your Make scenario to write rows
-      // — credentials stay server-side inside Make, never in this file.
-      await fetch(window.MAKE_WEBHOOK, {
+      await fetch(window.AUDIT_WEBHOOK, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -44,8 +41,8 @@ const Audit = () => {
           business:     answers.biz,
           industry:     answers.industry,
           hoursOfAdmin: answers.hours,
-          painPoints:   answers.pains,
-          tools:        answers.tools,
+          painPoints:   answers.pains.join(', '),
+          tools:        answers.tools.join(', '),
           submittedAt:  new Date().toISOString(),
         }),
       });
