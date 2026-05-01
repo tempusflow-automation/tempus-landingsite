@@ -108,14 +108,14 @@ const Problem = () => {
         </div>
 
         {/* delta */}
-        <div className="rv d2" style={{ marginTop: 32, display:'flex', flexWrap:'wrap', gap: 14, justifyContent:'center' }}>
+        <div className="rv d2 delta-grid" style={{ marginTop: 32, display:'grid', gridTemplateColumns:'repeat(4, 1fr)', gap: 14 }}>
           {[
             { k: '9 hrs', v: 'reclaimed every Tuesday' },
             { k: '$349', v: 'of your time, weekly' },
             { k: '$1,397', v: 'monthly opportunity cost' },
             { k: '7.2 wks', v: 'payback on Accelerate' },
           ].map(s => (
-            <div key={s.k} style={{ padding: '14px 22px', borderRadius: 10, background: 'var(--card2)', border: '1px solid var(--border)', display: 'flex', gap: 12, alignItems: 'baseline' }}>
+            <div key={s.k} style={{ padding: '14px 22px', borderRadius: 10, background: 'var(--card2)', border: '1px solid var(--border)', display: 'flex', flexDirection: 'column', gap: 4 }}>
               <span style={{ fontFamily: 'var(--f-head)', fontSize: 22, fontWeight: 600, color: 'var(--teal)', letterSpacing: '-.01em' }}>{s.k}</span>
               <span style={{ fontFamily: 'var(--f-body)', fontSize: 12.5, fontWeight: 300, color: 'var(--muted2)' }}>{s.v}</span>
             </div>
@@ -127,6 +127,7 @@ const Problem = () => {
         @media (max-width: 900px) {
           .prob-head { grid-template-columns: 1fr !important; gap: 24px !important; }
           .split-grid { grid-template-columns: 1fr !important; }
+          .delta-grid { grid-template-columns: repeat(2, 1fr) !important; }
         }
       `}</style>
     </section>
