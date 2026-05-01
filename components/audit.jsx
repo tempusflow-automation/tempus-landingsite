@@ -16,34 +16,6 @@ const Q4_TOOLS    = [
   'Other',
 ];
 
-// ─── Airtable helper ────────────────────────────────────────────────────────
-const submitToAirtable = async (data) => {
-  const token   = window.AIRTABLE_TOKEN;
-  const baseId  = window.AIRTABLE_BASE_ID;
-  const table   = window.AIRTABLE_TABLE;
-  if (!token || !baseId || !table) return; // skip if not configured
-  await fetch(`https://api.airtable.com/v0/${baseId}/${encodeURIComponent(table)}`, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      fields: {
-        'Name':         data.name,
-        'Email':        data.email,
-        'Business':     data.biz,
-        'Industry':     data.industry,
-        'Admin Hours':  data.hours,
-        'Pain Points':  data.pains.join(', '),
-        'Tools':        data.tools.join(', '),
-        'Source':       'audit-request',
-        'Submitted At': data.submittedAt,
-      },
-    }),
-  });
-};
-
 const TOTAL_STEPS = 6; // 0-4 questions + confirmation
 
 const Audit = () => {
@@ -58,38 +30,26 @@ const Audit = () => {
 
   const sendRequest = async () => {
     setSending(true);
-    const payload = {
-      source:       'audit-request',
-      name:         answers.name,
-      email:        answers.email,
-      business:     answers.biz,
-      industry:     answers.industry,
-      hoursOfAdmin: answers.hours,
-      painPoints:   answers.pains,
-      tools:        answers.tools,
-      submittedAt:  new Date().toISOString(),
-    };
-
-    await Promise.allSettled([
-      // Make.com webhook (existing)
-      fetch(window.MAKE_WEBHOOK, {
+    try {
+      // All data (including tools) routes through Make.com.
+      // Add an Airtable module inside your Make scenario to write rows
+      // — credentials stay server-side inside Make, never in this file.
+      await fetch(window.MAKE_WEBHOOK, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      }),
-      // Airtable direct submit
-      submitToAirtable({
-        name:    answers.name,
-        email:   answers.email,
-        biz:     answers.biz,
-        industry: answers.industry,
-        hours:   answers.hours,
-        pains:   answers.pains,
-        tools:   answers.tools,
-        submittedAt: payload.submittedAt,
-      }),
-    ]);
-
+        body: JSON.stringify({
+          source:       'audit-request',
+          name:         answers.name,
+          email:        answers.email,
+          business:     answers.biz,
+          industry:     answers.industry,
+          hoursOfAdmin: answers.hours,
+          painPoints:   answers.pains,
+          tools:        answers.tools,
+          submittedAt:  new Date().toISOString(),
+        }),
+      });
+    } catch (_) { /* fail silently */ }
     setSending(false);
     setStep(TOTAL_STEPS - 1);
   };
