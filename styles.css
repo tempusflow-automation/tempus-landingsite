@@ -208,28 +208,9 @@ img { display:block; max-width:100%; }
 
 /* ─── Mobile overrides ─────────────────── */
 
-/* Moat: collapse scroll triggers + show all acts stacked */
+/* Moat: hide scroll triggers on mobile (layout handled in moat.jsx <style>) */
 @media (max-width: 900px) {
   .moat-trigger { display: none !important; }
-  .moat-vis-item {
-    position: relative !important;
-    inset: auto !important;
-    opacity: 1 !important;
-    transform: none !important;
-    pointer-events: auto !important;
-    margin-bottom: 32px;
-  }
-  .moat-act-item {
-    position: relative !important;
-    top: auto !important;
-    left: auto !important;
-    right: auto !important;
-    opacity: 1 !important;
-    transform: none !important;
-    pointer-events: auto !important;
-    margin-bottom: 48px;
-  }
-  .moat-dots { display: none !important; }
 }
 
 /* Small screens: tighten section padding, buttons, container */

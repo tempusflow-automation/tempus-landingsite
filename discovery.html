@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tempus Flow — Project Discovery Form</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --midnight: #0A0E1A;
+    --teal: #4EFFD6;
+    --violet: #7B6EF6;
+    --gold: #C9A84C;
+    --cloud: #E8EAF0;
+    --muted: #6B7A99;
+    --muted2: #8892A4;
+    --card: #111827;
+    --card2: #0D1423;
+    --border: #1E2A40;
+    --border2: #243047;
+    --f-head: 'DM Serif Display', serif;
+    --f-mono: 'DM Mono', monospace;
+    --f-ui: 'Barlow Condensed', sans-serif;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--midnight);
+    color: var(--cloud);
+    font-family: var(--f-mono);
+    font-weight: 300;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    pointer-events: none;
+    opacity: 0.18;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");
+  }
+
+  .top-bar {
+    height: 2px;
+    background: linear-gradient(90deg, var(--teal), var(--violet), transparent);
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+  }
+
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 28px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── HEADER ── */
+  header {
+    padding: 52px 0 40px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 52px;
+  }
+
+  .logo-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 40px;
+  }
+
+  .logo { display: flex; align-items: center; gap: 10px; }
+
+  .logo-name {
+    font-family: var(--f-ui);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--cloud);
+  }
+
+  .logo-name em { color: var(--teal); font-style: normal; }
+
+  .doc-tag {
+    font-family: var(--f-ui);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 5px 12px;
+    border: 1px solid var(--border2);
+    border-radius: 4px;
+  }
+
+  .hero-label {
+    font-family: var(--f-ui);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .26em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .hero-label::after {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--teal);
+    opacity: .4;
+  }
+
+  h1 {
+    font-family: var(--f-head);
+    font-size: clamp(38px, 6vw, 60px);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -.02em;
+    color: #fff;
+    margin-bottom: 18px;
+  }
+
+  h1 em { color: var(--teal); font-style: italic; }
+
+  .hero-sub {
+    font-family: var(--f-mono);
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--muted2);
+    line-height: 1.85;
+    max-width: 520px;
+  }
+
+  /* ── PROGRESS ── */
+  .progress-bar {
+    width: 100%;
+    height: 2px;
+    background: var(--border);
+    border-radius: 2px;
+    margin-bottom: 52px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--teal), var(--violet));
+    border-radius: 2px;
+    width: 0%;
+    transition: width .4s ease;
+  }
+
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .progress-text {
+    font-family: var(--f-ui);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .progress-num {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--teal);
+  }
+
+  /* ── QUESTIONS ── */
+  .question-block {
+    margin-bottom: 52px;
+    padding-bottom: 52px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .question-block:last-of-type { border-bottom: none; }
+
+  .q-num {
+    font-family: var(--f-ui);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .q-num::before {
+    content: '';
+    width: 20px;
+    height: 1px;
+    background: var(--teal);
+    opacity: .5;
+  }
+
+  .q-label {
+    font-family: var(--f-head);
+    font-size: clamp(20px, 3vw, 26px);
+    font-weight: 400;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 8px;
+    letter-spacing: -.01em;
+  }
+
+  .q-helper {
+    font-family: var(--f-mono);
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--muted2);
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+
+  .q-helper strong { color: var(--cloud); font-weight: 400; }
+
+  /* ── INPUTS ── */
+  textarea, input[type="text"], input[type="email"] {
+    width: 100%;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--cloud);
+    font-family: var(--f-mono);
+    font-size: 13px;
+    font-weight: 300;
+    padding: 16px 18px;
+    outline: none;
+    resize: vertical;
+    transition: border-color .2s, background .2s;
+    line-height: 1.7;
+    -webkit-appearance: none;
+  }
+
+  textarea:focus, input[type="text"]:focus, input[type="email"]:focus {
+    border-color: var(--teal);
+    background: rgba(78, 255, 214, .03);
+  }
+
+  textarea::placeholder, input::placeholder {
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  textarea { min-height: 120px; }
+
+  input.field-error { border-color: #FF6B6B !important; }
+
+  /* ── CHECKBOXES ── */
+  .check-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  @media (max-width: 520px) { .check-grid { grid-template-columns: 1fr; } }
+
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 14px;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: border-color .15s, background .15s;
+    user-select: none;
+  }
+
+  .check-item:hover { border-color: var(--border2); background: rgba(255,255,255,.02); }
+
+  .check-item.selected {
+    border-color: var(--teal);
+    background: rgba(78, 255, 214, .05);
+  }
+
+  .check-box {
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--border2);
+    border-radius: 4px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color .15s, background .15s;
+  }
+
+  .check-item.selected .check-box { border-color: var(--teal); background: var(--teal); }
+
+  .check-box svg { width: 10px; height: 10px; opacity: 0; transition: opacity .15s; }
+  .check-item.selected .check-box svg { opacity: 1; }
+
+  .check-label {
+    font-family: var(--f-mono);
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--muted2);
+    line-height: 1.4;
+  }
+
+  .check-item.selected .check-label { color: var(--cloud); }
+
+  /* ── RADIO ── */
+  .radio-stack { display: flex; flex-direction: column; gap: 8px; }
+
+  .radio-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: border-color .15s, background .15s;
+    user-select: none;
+  }
+
+  .radio-item:hover { border-color: var(--border2); background: rgba(255,255,255,.02); }
+  .radio-item.selected { border-color: var(--teal); background: rgba(78, 255, 214, .05); }
+
+  .radio-dot {
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--border2);
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color .15s;
+  }
+
+  .radio-item.selected .radio-dot { border-color: var(--teal); }
+
+  .radio-dot-inner {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--teal);
+    opacity: 0;
+    transition: opacity .15s;
+  }
+
+  .radio-item.selected .radio-dot-inner { opacity: 1; }
+  .radio-content { flex: 1; }
+
+  .radio-label {
+    font-family: var(--f-mono);
+    font-size: 12.5px;
+    font-weight: 400;
+    color: var(--cloud);
+    margin-bottom: 2px;
+  }
+
+  .radio-sub {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--muted2);
+    line-height: 1.6;
+  }
+
+  /* ── MEDIA OPTION ── */
+  .media-option {
+    margin-top: 16px;
+    padding: 16px 18px;
+    background: rgba(78, 255, 214, .04);
+    border: 1px dashed rgba(78, 255, 214, .25);
+    border-radius: 8px;
+  }
+
+  .media-option-label {
+    font-family: var(--f-ui);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 6px;
+  }
+
+  .media-option-text {
+    font-family: var(--f-mono);
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--muted2);
+    line-height: 1.7;
+  }
+
+  .media-option-text a { color: var(--teal); text-decoration: none; }
+
+  .divider-or {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 14px 0;
+    font-family: var(--f-ui);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .divider-or::before, .divider-or::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── CONDITIONAL ── */
+  .conditional-block {
+    display: none;
+    margin-top: 20px;
+    padding: 20px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+
+  .conditional-block.visible { display: block; }
+
+  .conditional-label {
+    font-family: var(--f-ui);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  /* ── SUBMIT ── */
+  .submit-section {
+    margin-top: 60px;
+    padding-top: 48px;
+    border-top: 1px solid var(--border);
+  }
+
+  .submit-intro {
+    font-family: var(--f-head);
+    font-size: clamp(22px, 3.5vw, 30px);
+    font-weight: 400;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+
+  .submit-intro em { color: var(--teal); font-style: italic; }
+
+  .submit-sub {
+    font-family: var(--f-mono);
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--muted2);
+    line-height: 1.8;
+    margin-bottom: 28px;
+  }
+
+  .btn-submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--teal);
+    color: var(--midnight);
+    font-family: var(--f-ui);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: 16px 32px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: opacity .15s, transform .15s;
+  }
+
+  .btn-submit:hover:not(:disabled) { opacity: .9; transform: translateY(-1px); }
+  .btn-submit:active:not(:disabled) { transform: translateY(0); }
+  .btn-submit:disabled { opacity: .5; cursor: not-allowed; }
+
+  .btn-submit svg { width: 16px; height: 16px; transition: transform .2s; }
+  .btn-submit:hover:not(:disabled) svg { transform: translateX(3px); }
+
+  /* ── CALLOUT ── */
+  .callout {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 16px 18px;
+    background: rgba(78, 255, 214, .05);
+    border: 1px solid rgba(78, 255, 214, .2);
+    border-left: 3px solid var(--teal);
+    border-radius: 8px;
+    margin-top: 16px;
+  }
+
+  .callout-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+
+  .callout-text {
+    font-family: var(--f-mono);
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--cloud);
+    line-height: 1.8;
+  }
+
+  .callout-text strong { color: var(--teal); font-weight: 400; }
+
+  /* ── ERROR ── */
+  .error-msg {
+    display: none;
+    margin-top: 16px;
+    padding: 14px 18px;
+    background: rgba(255, 107, 107, .06);
+    border: 1px solid rgba(255, 107, 107, .3);
+    border-radius: 8px;
+    font-family: var(--f-mono);
+    font-size: 12px;
+    font-weight: 300;
+    color: #FF6B6B;
+    line-height: 1.7;
+  }
+
+  /* ── SUCCESS SCREEN ── */
+  #success-screen {
+    display: none;
+    text-align: center;
+    padding: 80px 0 120px;
+  }
+
+  .success-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(78,255,214,0.08);
+    border: 1px solid var(--teal);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--teal);
+    box-shadow: 0 0 40px -8px rgba(78,255,214,0.4);
+    margin-bottom: 28px;
+  }
+
+  .success-title {
+    font-family: var(--f-head);
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 400;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+
+  .success-title em { color: var(--teal); font-style: italic; }
+
+  .success-sub {
+    font-family: var(--f-mono);
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--muted2);
+    line-height: 1.8;
+    max-width: 460px;
+    margin: 0 auto 32px;
+  }
+
+  .success-redirecting {
+    font-family: var(--f-ui);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── SECTION DIVIDERS ── */
+  .section-head {
+    margin-bottom: 36px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-tag {
+    font-family: var(--f-ui);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .24em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-tag::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 0 52px;
+    margin-top: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .ft-left {
+    font-family: var(--f-ui);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .ft-right {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    font-weight: 300;
+    color: var(--muted);
+    text-align: right;
+    line-height: 1.7;
+  }
+</style>
+</head>
+<body>
+
+<script>
+  // ── Config ──────────────────────────────────────────────
+  var DISCOVERY_WEBHOOK = 'https://hook.eu1.make.com/rgixn27tl7wlycj8jnabgulsy29ik3ag';
+  var CALENDLY_URL = 'https://calendly.com/corey-tempusflow/30min'; // Replace with your Calendly booking link
+</script>
+
+<div class="top-bar"></div>
+
+<div class="wrap">
+
+  <header>
+    <div class="logo-row">
+      <div class="logo">
+        <div class="logo-name">Tempus <em>Flow</em></div>
+      </div>
+      <div class="doc-tag">Project Discovery v3</div>
+    </div>
+
+    <div class="hero-label">Let's build</div>
+    <h1>Tell me how your<br>business <em>actually</em> works.</h1>
+    <p class="hero-sub">Seven questions. No calls, no back-and-forth. The more specific you are here, the better your automations will be — and the less I'll need to come back and ask.<br><br>This takes about 10 minutes. — Corey</p>
+  </header>
+
+  <!-- SUCCESS SCREEN -->
+  <div id="success-screen">
+    <div class="success-icon">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="success-title">You're all set,<br><em>let's build.</em></div>
+    <p class="success-sub">I'll review your answers and have everything mapped before our sync call. Taking you to Calendly now to lock in your 15-minute slot.</p>
+    <div class="success-redirecting">Redirecting to Calendly…</div>
+  </div>
+
+  <!-- FORM BODY -->
+  <div id="form-body">
+
+    <!-- PROGRESS -->
+    <div class="progress-label">
+      <span class="progress-text">Progress</span>
+      <span class="progress-num" id="progress-num">0 / 8</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+
+    <!-- EMAIL -->
+    <div class="question-block">
+      <div class="q-num">00</div>
+      <div class="q-label">What's your email address?</div>
+      <p class="q-helper">So I can link this to your account and send you a copy.</p>
+      <input type="email" id="email" placeholder="you@example.com" oninput="updateProgress()"/>
+    </div>
+
+    <!-- SECTION 1 -->
+    <div class="section-head">
+      <div class="section-tag">Section 1 — Your Business</div>
+    </div>
+
+    <!-- Q1 -->
+    <div class="question-block" data-q="1">
+      <div class="q-num">01</div>
+      <div class="q-label">What does your business do, and who are your customers?</div>
+      <p class="q-helper">2–3 sentences is plenty. <strong>e.g. "We're a Sydney plumbing business. Residential repairs and new builds. Clients find us through Google and word of mouth."</strong></p>
+      <textarea id="q1" placeholder="Describe your business briefly..." rows="4" oninput="updateProgress()"></textarea>
+    </div>
+
+    <!-- SECTION 2 -->
+    <div class="section-head">
+      <div class="section-tag">Section 2 — Your Processes</div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="question-block" data-q="2">
+      <div class="q-num">02</div>
+      <div class="q-label">Walk me through your biggest time drain — step by step, as it actually happens today.</div>
+      <p class="q-helper">Don't worry about what can or can't be automated — just describe what happens right now. <strong>e.g. "A new enquiry comes in. I get an email. I manually type their details into a spreadsheet. I write them a reply from scratch. If I don't hear back I try to remember to follow up — but I usually forget."</strong></p>
+
+      <div class="media-option">
+        <div class="media-option-label">Prefer not to type? Record a quick Loom instead.</div>
+        <p class="media-option-text">Screen record yourself walking through the process, paste the link below. Takes 2 minutes and tells me more than 10 minutes of typing. <a href="https://loom.com" target="_blank">loom.com</a> is free.</p>
+      </div>
+      <div class="divider-or">or type it out</div>
+
+      <textarea id="q2" placeholder="Step by step — what happens when this process runs? What do you do first, what next..." rows="5" oninput="updateProgress()"></textarea>
+
+      <div class="callout" style="margin-top:20px;">
+        <div class="callout-icon">→</div>
+        <div class="callout-text">If you're on <strong>Accelerate or Transform</strong>, repeat the same format for each additional process below — trigger, steps, outcome.</div>
+      </div>
+      <div class="conditional-block" id="extra-processes" style="display:block; margin-top:16px;">
+        <div class="conditional-label">Additional Processes (Accelerate &amp; Transform clients)</div>
+        <textarea id="q2b" placeholder="Process 2: what triggers it, what happens step by step, what done looks like... Repeat for Process 3 and beyond." rows="5"></textarea>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="question-block" data-q="3">
+      <div class="q-num">03</div>
+      <div class="q-label">What has to happen for this process to kick off?</div>
+      <p class="q-helper">This is the trigger — the moment everything starts. <strong>e.g. "Someone fills in our website form", "A new invoice is created in Xero", "A client books via Calendly", "I manually start it every Monday."</strong></p>
+      <textarea id="q3" placeholder="What triggers this process?" rows="3" oninput="updateProgress()"></textarea>
+    </div>
+
+    <!-- Q4 -->
+    <div class="question-block" data-q="4">
+      <div class="q-num">04</div>
+      <div class="q-label">What does success look like to you in 30 days?</div>
+      <p class="q-helper">How will you know this worked? <strong>e.g. "I stop spending Sunday evenings chasing invoices. New leads get a reply in minutes. I can take a day off without things falling apart."</strong></p>
+      <textarea id="q4" placeholder="What does done look like for you?" rows="4" oninput="updateProgress()"></textarea>
+    </div>
+
+    <!-- SECTION 3 -->
+    <div class="section-head">
+      <div class="section-tag">Section 3 — Your Tools</div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="question-block" data-q="5">
+      <div class="q-num">05</div>
+      <div class="q-label">What tools does your business use? Select everything that applies.</div>
+      <p class="q-helper">I'll use this to plan how everything connects before our sync call.</p>
+
+      <div class="check-grid" id="tools-grid">
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#0A0E1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="check-label">Gmail</span>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#0A0E1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="check-label">Outlook / Microsoft 365</span>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#0A0E1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="check-label">Google Calendar</span>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#0A0E1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="check-label">Google Drive / Sheets</span>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#0A0E1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="check-label">Xero</span>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#0A0E1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="check-label">MYOB</span>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#0A0E1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="check-label">QuickBooks</span>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#0A0E1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="check-label">Stripe</span>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#0A0E1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="check-label">HubSpot</span>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#0A0E1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="check-label">Notion / Airtable</span>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#0A0E1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="check-label">Shopify / WooCommerce</span>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#0A0E1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="check-label">Calendly / Acuity</span>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#0A0E1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="check-label">Instagram / Facebook</span>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#0A0E1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="check-label">Slack / WhatsApp Business</span>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#0A0E1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="check-label">ServiceM8</span>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#0A0E1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="check-label">Fergus</span>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#0A0E1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="check-label">Cliniko / Halaxy</span>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)" id="other-check">
+          <div class="check-box"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#0A0E1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="check-label">Other (list below)</span>
+        </div>
+      </div>
+
+      <div class="conditional-block" id="other-tools-block">
+        <div class="conditional-label">Other tools</div>
+        <input type="text" id="q6" placeholder="e.g. REI Cloud, Deputy, Lightspeed, Square...">
+      </div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="question-block" data-q="7">
+      <div class="q-num">06</div>
+      <div class="q-label">Where does your client information currently live?</div>
+      <p class="q-helper">This tells me where the automation should put things when it's done.</p>
+
+      <div class="radio-stack" id="data-location">
+        <div class="radio-item" onclick="selectRadio(this, 'data-location')">
+          <div class="radio-dot"><div class="radio-dot-inner"></div></div>
+          <div class="radio-content">
+            <div class="radio-label">A CRM (e.g. HubSpot, Salesforce, Zoho)</div>
+          </div>
+        </div>
+        <div class="radio-item" onclick="selectRadio(this, 'data-location')">
+          <div class="radio-dot"><div class="radio-dot-inner"></div></div>
+          <div class="radio-content">
+            <div class="radio-label">A spreadsheet (Google Sheets or Excel)</div>
+          </div>
+        </div>
+        <div class="radio-item" onclick="selectRadio(this, 'data-location')">
+          <div class="radio-dot"><div class="radio-dot-inner"></div></div>
+          <div class="radio-content">
+            <div class="radio-label">Notion or Airtable</div>
+          </div>
+        </div>
+        <div class="radio-item" onclick="selectRadio(this, 'data-location')">
+          <div class="radio-dot"><div class="radio-dot-inner"></div></div>
+          <div class="radio-content">
+            <div class="radio-label">Accounting software (Xero, MYOB)</div>
+          </div>
+        </div>
+        <div class="radio-item" onclick="selectRadio(this, 'data-location')">
+          <div class="radio-dot"><div class="radio-dot-inner"></div></div>
+          <div class="radio-content">
+            <div class="radio-label">Nowhere consistent — it's scattered</div>
+            <div class="radio-sub">That's fine — we'll sort this as part of the build.</div>
+          </div>
+        </div>
+        <div class="radio-item" onclick="selectRadio(this, 'data-location')">
+          <div class="radio-dot"><div class="radio-dot-inner"></div></div>
+          <div class="radio-content">
+            <div class="radio-label">Other</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUBMIT -->
+    <div class="submit-section">
+      <div class="submit-intro">That's <em>everything.</em></div>
+      <p class="submit-sub">Once you submit, you'll be taken straight to Calendly to book our 15-minute credential sync — the only call in the entire process. After that, the build begins.<br><br>If anything urgent comes up in the meantime, reply to your welcome email.</p>
+      <button class="btn-submit" id="submit-btn" onclick="handleSubmit()">
+        Submit — let's build
+        <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="error-msg" id="submit-error"></div>
+    </div>
+
+  </div><!-- /form-body -->
+
+  <footer>
+    <div class="ft-left">Tempus Flow · tempusflow.com.au</div>
+    <div class="ft-right">Project Discovery Form v3<br>Sent to you after payment</div>
+  </footer>
+
+</div>
+
+<script>
+  // ── PROGRESS ──────────────────────────────────────────
+  function updateProgress() {
+    const filled = [
+      document.getElementById('email')?.value?.trim(),
+      document.getElementById('q1')?.value?.trim(),
+      document.getElementById('q2')?.value?.trim(),
+      document.getElementById('q3')?.value?.trim(),
+      document.getElementById('q4')?.value?.trim(),
+      document.querySelectorAll('.check-item.selected').length > 0 ? 'x' : '',
+      document.getElementById('q6')?.value?.trim() || 'skip',
+      document.querySelector('#data-location .radio-item.selected') ? 'x' : '',
+    ].filter(Boolean).length;
+
+    const total = 8;
+    const pct = Math.round((filled / total) * 100);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-num').textContent = filled + ' / ' + total;
+  }
+
+  // ── CHECKBOXES ──────────────────────────────────────
+  function toggleCheck(el) {
+    el.classList.toggle('selected');
+    const otherSelected = document.getElementById('other-check').classList.contains('selected');
+    document.getElementById('other-tools-block').classList.toggle('visible', otherSelected);
+    updateProgress();
+  }
+
+  // ── RADIO ────────────────────────────────────────────
+  function selectRadio(el, groupId) {
+    document.querySelectorAll('#' + groupId + ' .radio-item').forEach(r => r.classList.remove('selected'));
+    el.classList.add('selected');
+    updateProgress();
+  }
+
+  // ── SUBMIT ───────────────────────────────────────────
+  async function handleSubmit() {
+    const email       = document.getElementById('email')?.value?.trim();
+    const q1          = document.getElementById('q1')?.value?.trim();
+    const q2          = document.getElementById('q2')?.value?.trim();
+    const q2b         = document.getElementById('q2b')?.value?.trim();
+    const q3          = document.getElementById('q3')?.value?.trim();
+    const q4          = document.getElementById('q4')?.value?.trim();
+    const tools       = Array.from(document.querySelectorAll('#tools-grid .check-item.selected .check-label')).map(el => el.textContent.trim());
+    const otherTools  = document.getElementById('q6')?.value?.trim();
+    const dataLocation = document.querySelector('#data-location .radio-item.selected .radio-label')?.textContent?.trim();
+
+    // Validate required fields
+    const missing = [];
+    if (!email)        missing.push('email');
+    if (!q1)           missing.push('q1');
+    if (!q2)           missing.push('q2');
+    if (!q3)           missing.push('q3');
+    if (!q4)           missing.push('q4');
+    if (!tools.length) missing.push('tools-grid');
+    if (!dataLocation) missing.push('data-location');
+
+    if (missing.length) {
+      const errEl = document.getElementById('submit-error');
+      errEl.textContent = 'Please fill in all required fields before submitting.';
+      errEl.style.display = 'block';
+      const first = document.getElementById(missing[0]);
+      if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    document.getElementById('submit-error').style.display = 'none';
+
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.innerHTML = 'Sending…';
+
+    try {
+      await fetch(DISCOVERY_WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          source:             'discovery-form',
+          email,
+          businessDescription: q1,
+          mainProcess:         q2,
+          additionalProcesses: q2b || '',
+          trigger:             q3,
+          successDefinition:   q4,
+          tools:               tools.join(', '),
+          otherTools:          otherTools || '',
+          dataLocation,
+          submittedAt:         new Date().toISOString(),
+        }),
+      });
+    } catch (_) { /* fail silently — don't block the redirect */ }
+
+    // Show success + redirect
+    document.getElementById('form-body').style.display = 'none';
+    document.getElementById('success-screen').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    setTimeout(function() {
+      window.location.href = CALENDLY_URL;
+    }, 3000);
+  }
+
+  // Init
+  updateProgress();
+</script>
+</body>
+</html>
