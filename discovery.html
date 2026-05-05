@@ -653,6 +653,47 @@
     text-align: right;
     line-height: 1.7;
   }
+
+  /* ── Payment confirmation banner ── */
+  #payment-banner {
+    display: none;
+    background: linear-gradient(135deg, #0d1f18 0%, #0a1a13 100%);
+    border-bottom: 1px solid rgba(78,255,214,0.25);
+    padding: 14px 0;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  #payment-banner .wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .banner-icon {
+    width: 22px;
+    height: 22px;
+    background: rgba(78,255,214,0.12);
+    border: 1px solid rgba(78,255,214,0.4);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--teal);
+  }
+  .banner-text {
+    font-family: var(--f-ui);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .06em;
+    color: var(--teal);
+  }
+  .banner-text span {
+    color: var(--muted2);
+    font-weight: 400;
+    letter-spacing: .02em;
+    margin-left: 6px;
+  }
 </style>
 </head>
 <body>
@@ -664,6 +705,25 @@
 </script>
 
 <div class="top-bar"></div>
+
+<!-- Payment confirmation banner — shown when ?paid=true is in the URL -->
+<div id="payment-banner">
+  <div class="wrap">
+    <div class="banner-icon">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="banner-text">
+      PAYMENT CONFIRMED
+      <span>Your payment was successful — complete the form below to get started.</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  if (new URLSearchParams(window.location.search).get('paid') === 'true') {
+    document.getElementById('payment-banner').style.display = 'block';
+  }
+</script>
 
 <div class="wrap">
 
