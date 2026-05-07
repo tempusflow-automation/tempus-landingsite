@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Service Agreement — Tempus Flow</title>
+<meta name="description" content="Tempus Flow Service Agreement and Scope of Works. Plain-English terms governing all automation packages.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --midnight: #0A0E1A;
+    --teal: #4EFFD6;
+    --violet: #7B6EF6;
+    --cloud: #E8EAF0;
+    --muted: #6B7A99;
+    --muted2: #8892A4;
+    --card: #111827;
+    --card2: #0D1423;
+    --border: #1E2A40;
+    --border2: #243047;
+    --f-head: 'DM Serif Display', serif;
+    --f-mono: 'DM Mono', monospace;
+    --f-ui: 'Barlow Condensed', sans-serif;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--midnight);
+    color: var(--cloud);
+    font-family: var(--f-mono);
+    font-weight: 300;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    pointer-events: none;
+    opacity: 0.18;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");
+  }
+
+  .top-bar {
+    height: 2px;
+    background: linear-gradient(90deg, var(--teal), var(--violet), transparent);
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+  }
+
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 28px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── HEADER ── */
+  header {
+    padding: 52px 0 40px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 52px;
+  }
+
+  .logo-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 40px;
+  }
+
+  .logo { display: flex; align-items: center; gap: 10px; }
+
+  .logo-name {
+    font-family: var(--f-ui);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--cloud);
+    text-decoration: none;
+  }
+
+  .logo-name em { color: var(--teal); font-style: normal; }
+
+  .doc-tag {
+    font-family: var(--f-ui);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 5px 12px;
+    border: 1px solid var(--border2);
+    border-radius: 4px;
+  }
+
+  .hero-label {
+    font-family: var(--f-ui);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .26em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .hero-label::after {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--teal);
+    opacity: .4;
+  }
+
+  h1 {
+    font-family: var(--f-head);
+    font-size: clamp(36px, 5.5vw, 56px);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -.02em;
+    color: #fff;
+    margin-bottom: 18px;
+  }
+
+  h1 em { color: var(--teal); font-style: italic; }
+
+  .hero-sub {
+    font-family: var(--f-mono);
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--muted2);
+    line-height: 1.85;
+    max-width: 540px;
+  }
+
+  /* ── CONTENT ── */
+  .section-block {
+    margin-bottom: 48px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-block:last-of-type {
+    border-bottom: none;
+  }
+
+  .section-num {
+    font-family: var(--f-ui);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-num::before {
+    content: '';
+    width: 20px;
+    height: 1px;
+    background: var(--teal);
+    opacity: .5;
+  }
+
+  h2 {
+    font-family: var(--f-head);
+    font-size: clamp(22px, 3vw, 28px);
+    font-weight: 400;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    letter-spacing: -.01em;
+  }
+
+  h2 em { color: var(--teal); font-style: italic; }
+
+  .clause {
+    margin-bottom: 20px;
+  }
+
+  .clause-label {
+    font-family: var(--f-ui);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .clause-body {
+    font-family: var(--f-mono);
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--muted2);
+    line-height: 1.85;
+  }
+
+  .clause-body strong {
+    color: var(--cloud);
+    font-weight: 400;
+  }
+
+  .clause-body a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  .clause-body a:hover {
+    text-decoration: underline;
+  }
+
+  /* ── CALLOUT ── */
+  .callout {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 16px 18px;
+    background: rgba(78, 255, 214, .05);
+    border: 1px solid rgba(78, 255, 214, .2);
+    border-left: 3px solid var(--teal);
+    border-radius: 8px;
+    margin-bottom: 48px;
+  }
+
+  .callout-text {
+    font-family: var(--f-mono);
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--cloud);
+    line-height: 1.8;
+  }
+
+  .callout-text strong { color: var(--teal); font-weight: 400; }
+
+  .callout-text a { color: var(--teal); text-decoration: none; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 0 52px;
+    margin-top: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .ft-left {
+    font-family: var(--f-ui);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .ft-right {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    font-weight: 300;
+    color: var(--muted);
+    text-align: right;
+    line-height: 1.7;
+  }
+
+  @media (max-width: 560px) {
+    .logo-row { flex-direction: column; align-items: flex-start; gap: 16px; }
+    footer { flex-direction: column; }
+    .ft-right { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar"></div>
+
+<div class="wrap">
+
+  <header>
+    <div class="logo-row">
+      <a href="/" class="logo">
+        <div class="logo-name">Tempus <em>Flow</em></div>
+      </a>
+      <div class="doc-tag">Service Agreement v1.0</div>
+    </div>
+
+    <div class="hero-label">Legal</div>
+    <h1>Scope of Works &<br><em>Service Agreement.</em></h1>
+    <p class="hero-sub">Plain English. Legally binding under Australian law. By completing payment via the Stripe link in your proposal, you agree to these terms in full.</p>
+  </header>
+
+  <!-- ACCEPTANCE CALLOUT -->
+  <div class="callout">
+    <div class="callout-text">
+      <strong>How acceptance works —</strong> These terms are accepted via clickwrap at checkout. Checking the box and completing payment on the Stripe payment page constitutes your agreement to this Service Agreement. No signature required. Questions? Email <a href="mailto:corey@tempusflow.com.au">corey@tempusflow.com.au</a> before paying.
+    </div>
+  </div>
+
+  <!-- 1. SCOPE OF WORKS -->
+  <div class="section-block">
+    <div class="section-num">01</div>
+    <h2>Scope of Works —<br><em>what we do.</em></h2>
+
+    <div class="clause">
+      <div class="clause-label">Deliverables</div>
+      <div class="clause-body">Tempus Flow will build the custom Make.com automations outlined in your proposal. The specific workflows to be built are confirmed during the Project Discovery process.</div>
+    </div>
+
+    <div class="clause">
+      <div class="clause-label">Revisions</div>
+      <div class="clause-body">Each package includes <strong>one (1) round of revisions</strong> after the initial build is delivered. A revision is a minor adjustment to an agreed-upon workflow. It does not include building entirely new workflows or connecting tools not discussed during the Discovery phase.</div>
+    </div>
+
+    <div class="clause">
+      <div class="clause-label">Support Window</div>
+      <div class="clause-body">Post-delivery support is provided for the duration specified in your package — <strong>14 days (Reclaim), 30 days (Accelerate), or 60 days (Transform)</strong>. This covers bug fixes and minor tweaks to delivered workflows. It does not cover new builds or scope expansions.</div>
+    </div>
+  </div>
+
+  <!-- 2. CLIENT RESPONSIBILITIES -->
+  <div class="section-block">
+    <div class="section-num">02</div>
+    <h2>Client Responsibilities —<br><em>what you do.</em></h2>
+
+    <div class="clause">
+      <div class="clause-label">Access</div>
+      <div class="clause-body">You agree to provide Tempus Flow with the necessary access to your Make.com account and any third-party tools required, during the Credential Sync Call.</div>
+    </div>
+
+    <div class="clause">
+      <div class="clause-label">Timeliness</div>
+      <div class="clause-body">You agree to complete the Project Discovery Form and book the Credential Sync Call within <strong>14 days of payment</strong>. Delays on your end will delay the build timeline. Tempus Flow is not liable for delays caused by late client action.</div>
+    </div>
+
+    <div class="clause">
+      <div class="clause-label">Tool Costs</div>
+      <div class="clause-body">You are responsible for any subscription costs associated with Make.com and your third-party tools. These costs are not included in Tempus Flow's package pricing.</div>
+    </div>
+  </div>
+
+  <!-- 3. OWNERSHIP -->
+  <div class="section-block">
+    <div class="section-num">03</div>
+    <h2>Ownership &<br><em>intellectual property.</em></h2>
+
+    <div class="clause">
+      <div class="clause-label">Full Ownership</div>
+      <div class="clause-body">Once your automations are built and handed over, <strong>you own them completely</strong>. They live in your Make.com account and are yours to use, modify, or transfer.</div>
+    </div>
+
+    <div class="clause">
+      <div class="clause-label">No Lock-in</div>
+      <div class="clause-body">You are free to modify, pause, or delete the automations at any time. Tempus Flow retains no ongoing control or ownership over your workflows once delivered.</div>
+    </div>
+
+    <div class="clause">
+      <div class="clause-label">Pre-existing IP</div>
+      <div class="clause-body">Tempus Flow retains ownership of any proprietary templates, internal scripts, or processes used during the build. These are tools of the trade, not client deliverables.</div>
+    </div>
+  </div>
+
+  <!-- 4. LIABILITY -->
+  <div class="section-block">
+    <div class="section-num">04</div>
+    <h2>Third-Party Dependencies<br>&amp; <em>liability.</em></h2>
+
+    <div class="clause">
+      <div class="clause-label">Tool Changes</div>
+      <div class="clause-body">Tempus Flow builds automations using third-party platforms and APIs (e.g. Make.com, Xero, ServiceM8, Gmail). We are not responsible if a third-party tool changes its API, updates its pricing, deprecates a feature, or experiences an outage that affects your automation — particularly after the support window has closed.</div>
+    </div>
+
+    <div class="clause">
+      <div class="clause-label">Limitation of Liability</div>
+      <div class="clause-body">To the maximum extent permitted by Australian law, Tempus Flow's total liability for any claim arising from this agreement is <strong>limited to the total amount you paid for your specific package</strong>. We are not liable for indirect, consequential, or incidental damages, including but not limited to lost profits, lost data, or business interruption.</div>
+    </div>
+  </div>
+
+  <!-- 5. PAYMENT -->
+  <div class="section-block">
+    <div class="section-num">05</div>
+    <h2>Payment &<br><em>refunds.</em></h2>
+
+    <div class="clause">
+      <div class="clause-label">Payment Terms</div>
+      <div class="clause-body">Full payment is required upfront via Stripe before any work begins.</div>
+    </div>
+
+    <div class="clause">
+      <div class="clause-label">Refund Policy</div>
+      <div class="clause-body">Because this is a custom, done-for-you service, <strong>payments are non-refundable once the Credential Sync Call has been completed and the build has commenced</strong>.</div>
+    </div>
+
+    <div class="clause">
+      <div class="clause-label">Pre-build Cancellation</div>
+      <div class="clause-body">If you cancel before the Credential Sync Call, a full refund will be issued minus any Stripe processing fees (typically 1.75% + 30¢ for Australian cards).</div>
+    </div>
+  </div>
+
+  <!-- 6. CONFIDENTIALITY -->
+  <div class="section-block">
+    <div class="section-num">06</div>
+    <h2><em>Confidentiality.</em></h2>
+
+    <div class="clause">
+      <div class="clause-label">Data Protection</div>
+      <div class="clause-body">Tempus Flow will only access the data and systems necessary to build and test your automations. We will not share, sell, or distribute your business data, credentials, or client information to any third party. All access shared during the Credential Sync Call is used solely for completing your build.</div>
+    </div>
+  </div>
+
+  <!-- 7. JURISDICTION -->
+  <div class="section-block">
+    <div class="section-num">07</div>
+    <h2><em>Jurisdiction.</em></h2>
+
+    <div class="clause">
+      <div class="clause-label">Governing Law</div>
+      <div class="clause-body">This agreement is governed by the laws of New South Wales, Australia. Any disputes will be subject to the exclusive jurisdiction of the courts of New South Wales.</div>
+    </div>
+
+    <div class="clause">
+      <div class="clause-label">Effective Date</div>
+      <div class="clause-body">This agreement is effective as of the date of payment. Questions before paying? Email <a href="mailto:corey@tempusflow.com.au">corey@tempusflow.com.au</a>.</div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="ft-left">Tempus Flow · ABN 19 608 488 283</div>
+    <div class="ft-right">Service Agreement v1.0 · May 2026<br>New South Wales, Australia</div>
+  </footer>
+
+</div>
+</body>
+</html>

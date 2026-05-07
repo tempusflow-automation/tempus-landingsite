@@ -18,6 +18,7 @@ const Icon = ({ name, size = 18, color = 'currentColor', className = '' }) => {
     case 'spark':        return <svg {...common}><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M6 18l2.5-2.5M15.5 8.5L18 6"/></svg>;
     case 'plus':         return <svg {...common}><path d="M12 5v14M5 12h14"/></svg>;
     case 'minus':        return <svg {...common}><path d="M5 12h14"/></svg>;
+    case 'chevron-down': return <svg {...common}><path d="M6 9l6 6 6-6"/></svg>;
     case 'dollar':       return <svg {...common}><path d="M12 3v18"/><path d="M16 7H10a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6H7"/></svg>;
     case 'logo-mark':    return (
       <svg width={size} height={size} viewBox="0 0 32 32" fill="none">

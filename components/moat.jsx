@@ -63,7 +63,7 @@ const PricingVisual = () => (
       { name:'Reclaim',    price:'$1,200', shown:true,  color:'var(--teal)' },
       { name:'Accelerate', price:'$2,500', shown:true,  color:'var(--teal)' },
       { name:'Transform',  price:'$4,500', shown:true,  color:'var(--violet)' },
-      { name:'Retainer',   price:'$600+/mo', shown:true, color:'var(--gold)' },
+      { name:'Flow',        price:'from $650/mo', shown:true, color:'var(--gold)' },
     ].map((p,i) => (
       <div key={p.name} style={{
         display:'flex', alignItems:'center', justifyContent:'space-between',

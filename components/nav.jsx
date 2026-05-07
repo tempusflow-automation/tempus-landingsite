@@ -63,6 +63,9 @@ const Nav = () => {
               onMouseLeave={e => e.currentTarget.style.color = 'var(--muted2)'}
               >{l.label}</a>
             ))}
+            <a href="#audit" className="btn btn-primary" style={{ marginLeft: 8, marginRight: 6, padding: '9px 18px', fontSize: 10.5 }}>
+              Free Workflow Review <Icon name="arrow-right" size={13}/>
+            </a>
           </div>
 
           {/* Hamburger (mobile only) */}
@@ -139,7 +142,7 @@ const Nav = () => {
           transform: open ? 'translateY(0)' : 'translateY(12px)',
           transition: `opacity .3s ease ${links.length * 0.06 + 0.05}s, transform .3s ease ${links.length * 0.06 + 0.05}s`,
         }}>
-          Request a free audit <Icon name="arrow-right" size={14}/>
+          Free Workflow Review <Icon name="arrow-right" size={14}/>
         </a>
 
         <p style={{

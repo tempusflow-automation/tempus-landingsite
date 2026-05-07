@@ -35,10 +35,10 @@ const Terminal = () => {
     return () => clearTimeout(t);
   }, [step, typed, phase]);
 
-  const visibleHistory = HERO_LINES.slice(0, step);
+  const visibleHistory = HERO_LINES.slice(Math.max(0, step - 2), step);
 
   return (
-    <div className="conic-border" style={{ padding: 1, borderRadius: 14 }}>
+    <div className="conic-border" style={{ padding: 1, borderRadius: 14, flex: 1, display: 'flex', flexDirection: 'column' }}>
       <div style={{
         background: 'linear-gradient(180deg, rgba(13,20,35,0.95), rgba(10,14,26,0.98))',
         borderRadius: 13,
@@ -46,7 +46,8 @@ const Terminal = () => {
         fontFamily: 'var(--f-mono)',
         fontSize: 13.5,
         lineHeight: 1.7,
-        minHeight: 320,
+        flex: 1,
+        overflow: 'hidden',
         display: 'flex', flexDirection: 'column'
       }}>
         {/* chrome */}
@@ -127,7 +128,7 @@ const Hero = () => {
           </p>
           <div className="rv in d2 hero-cta" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 16 }}>
             <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-              <a href="#audit" className="btn btn-primary">Request a free audit <Icon name="arrow-right" size={14} /></a>
+              <a href="#audit" className="btn btn-primary">Free Workflow Review <Icon name="arrow-right" size={14} /></a>
               <a href="#pricing" className="btn btn-ghost">See pricing <Icon name="arrow-down" size={14} /></a>
             </div>
             <span style={{ fontFamily: 'var(--f-ui)', fontSize: 10, letterSpacing: '.22em', textTransform: 'uppercase', color: 'var(--muted)' }}>
@@ -137,8 +138,8 @@ const Hero = () => {
         </div>
 
         {/* terminal + side stats */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 24 }} className="hero-row">
-          <div className="rv-l in d3"><Terminal /></div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 24, alignItems: 'stretch' }} className="hero-row">
+          <div className="rv-l in d3" style={{ display: 'flex', flexDirection: 'column' }}><Terminal /></div>
 
           <div className="rv-r in d4" style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
             <div className="card" style={{ padding: '20px 22px' }}>

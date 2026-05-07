@@ -69,7 +69,7 @@ const Audit = () => {
 
       <div className="container" style={{ position:'relative' }}>
         <div style={{ textAlign:'center', marginBottom: 60 }}>
-          <div className="eyebrow rv" style={{ marginBottom: 16 }}>06 — Free audit</div>
+          <div className="eyebrow rv" style={{ marginBottom: 16 }}>06 — Free Workflow Review</div>
           <h2 className="h-display rv" style={{ fontSize:'clamp(40px, 6vw, 84px)' }}>
             Let's find your<br/><span className="serif" style={{color:'var(--teal)'}}>biggest</span> time leak.
           </h2>

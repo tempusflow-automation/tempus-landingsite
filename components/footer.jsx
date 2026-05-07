@@ -2,7 +2,7 @@
 const FAQ_ITEMS = [
 { q: 'Wait — there really aren\'t any calls?', a: 'One. A 15-minute credential sync to connect Make to your accounts. Everything else is async. The form takes 9 minutes. The Loom walkthroughs you watch when you want.' },
 { q: 'What does "built in your account" mean?', a: 'We log into your Make.com workspace and build there. The scenarios live under your billing, your owner login, your data. Cancel us tomorrow and nothing turns off.' },
-{ q: 'What if I need changes later?', a: 'Three options. Make them yourself (everything\'s documented). Pay hourly when you need us. Or grab the Flow Retainer for ongoing tweaks. No lock-in.' },
+{ q: 'What if I need changes later?', a: 'Three options. Make them yourself (everything\'s documented). Pay hourly when you need us. Or grab the Flow Plan for ongoing tweaks. No lock-in.' },
 { q: 'How is this different from hiring a freelancer?', a: 'Fixed price published upfront. Specific to Aussie SMB tools. Done in 9 days, not 9 weeks. And we don\'t hold your work hostage in our account.' },
 { q: 'Is $1,200 really the start price?', a: 'Yes. Reclaim is one workflow, fully built and handed over, for $1,200 AUD. No setup fees. No subscription. No "from $1,200" — that IS the price.' }];
 
@@ -63,13 +63,7 @@ const Footer = () =>
     <div className="container">
       <div style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr 1fr 1fr', gap: 36, marginBottom: 40 }} className="ft-grid">
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18 }}>
-            <span style={{
-            width: 34, height: 34, borderRadius: '50%',
-            border: '1.5px solid var(--teal)', background: 'var(--card)',
-            display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-            fontFamily: 'var(--f-ui)', fontSize: 11, fontWeight: 700, color: 'var(--teal)', letterSpacing: '.05em'
-          }}>TF</span>
+          <div style={{ marginBottom: 18 }}>
             <span style={{ fontFamily: 'var(--f-head)', fontSize: 18, fontWeight: 600, color: 'var(--cloud)' }}>
               Tempus <em style={{ color: 'var(--teal)', fontStyle: 'normal' }}>Flow</em>
             </span>
@@ -80,7 +74,7 @@ const Footer = () =>
         </div>
         {[
       { t: 'Site', l: ['Problem', 'The Difference', 'Process', 'Pricing', 'FAQ'] },
-      { t: 'Packages', l: ['Reclaim · $1,200', 'Accelerate · $2,500', 'Transform · $4,500', 'Flow Retainer'] },
+      { t: 'Packages', l: ['Reclaim · $1,200', 'Accelerate · $2,500', 'Transform · $4,500', 'Flow Plan'] },
       { t: 'Contact', l: ['corey@tempusflow.com.au', 'Sydney, Australia', 'LinkedIn', 'Instagram'] }].
       map((c) =>
       <div key={c.t}>
@@ -98,7 +92,7 @@ const Footer = () =>
       </div>
       <div style={{ paddingTop: 24, borderTop: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
         <span style={{ fontFamily: 'var(--f-body)', fontSize: 11, color: 'var(--muted)' }}>
-          © 2026 Tempus Flow · ABN coming soon · Built in Sydney
+          © 2026 Tempus Flow · ABN 19 608 488 283 · Built in Sydney
         </span>
         <span style={{ fontFamily: 'var(--f-mono)', fontSize: 11, color: 'var(--muted)' }}>
           tempusflow.com.au
