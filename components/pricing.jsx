@@ -41,13 +41,13 @@ const RETAINERS = [
     id: 'retainer-lite', name: 'Flow Plan Lite', icon: '🔄', color: 'var(--gold)',
     price: 650, period: 'AUD · per month · cancel anytime',
     sub: 'Keep automations running and growing.',
-    feats: ['Monthly automation health check', '4 hrs build/month', 'Priority support', 'No lock-in · cancel anytime'],
+    feats: ['Monthly automation health check', '4 hrs build/month', 'Priority support', 'Tempus OS Dashboard', 'No lock-in · cancel anytime'],
   },
   {
     id: 'retainer-pro', name: 'Flow Plan Pro', icon: '🔄', color: 'var(--gold)',
     price: 950, period: 'AUD · per month · cancel anytime',
     sub: 'Ongoing builds and optimisation at scale.',
-    feats: ['Monthly automation health check', '8 hrs build/month', 'Priority support', 'No lock-in · cancel anytime'],
+    feats: ['Monthly automation health check', '8 hrs build/month', 'Priority support', 'Tempus OS Dashboard', 'No lock-in · cancel anytime'],
     badge: 'Best Value',
   },
 ];
@@ -491,6 +491,25 @@ const Pricing = () => {
 
         {/* ── Step 3: Scale ── */}
         <StepDivider step="3" label="Scale — Flow Plan" sub="For clients who already have their foundations automated."/>
+
+        {/* Tradie OS callout */}
+        <div className="rv" style={{
+          display: 'flex', alignItems: 'flex-start', gap: 14,
+          padding: '14px 18px', marginBottom: 16,
+          background: 'rgba(78,255,214,0.04)', border: '1px solid rgba(78,255,214,0.18)',
+          borderLeft: '3px solid var(--teal)', borderRadius: 8,
+        }}>
+          <div style={{ fontSize: 15, flexShrink: 0, marginTop: 1 }}>📊</div>
+          <div>
+            <div style={{ fontFamily: 'var(--f-ui)', fontSize: 10, fontWeight: 700, letterSpacing: '.18em', textTransform: 'uppercase', color: 'var(--teal)', marginBottom: 4 }}>
+              Tempus OS Dashboard — included on all Flow Plans
+            </div>
+            <div style={{ fontFamily: 'var(--f-body)', fontSize: 13, fontWeight: 300, color: 'var(--muted2)', lineHeight: 1.65 }}>
+              Flow Plan clients get access to the Tempus OS Dashboard — a private portal showing every automation run, success rate, and ROI in real time. Log in any time to see exactly what's firing and what it's saving you.
+            </div>
+          </div>
+        </div>
+
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 40 }}>
           {RETAINERS.map((p, i) => <TierRow key={p.id} p={p} index={i} gated={true}/>)}
         </div>

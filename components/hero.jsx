@@ -139,7 +139,7 @@ const Hero = () => {
 
         {/* terminal + side stats */}
         <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 24, alignItems: 'stretch' }} className="hero-row">
-          <div className="rv-l in d3" style={{ display: 'flex', flexDirection: 'column' }}><Terminal /></div>
+          <div className="rv-l in d3 hero-terminal-wrap" style={{ display: 'flex', flexDirection: 'column' }}><Terminal /></div>
 
           <div className="rv-r in d4" style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
             <div className="card" style={{ padding: '20px 22px' }}>
@@ -204,6 +204,7 @@ Built on Make.com · Plays with the tools you already pay for
       <style>{`
         @media (max-width: 900px) {
           .hero-row { grid-template-columns: 1fr !important; gap: 36px !important; }
+          .hero-terminal-wrap { height: 260px; overflow: hidden; }
         }
       `}</style>
     </section>);

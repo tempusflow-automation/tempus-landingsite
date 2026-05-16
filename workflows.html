@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workflow Library — Tempus Flow</title>
+<meta name="description" content="Individual automation workflows built inside your Make.com account. Pick the exact fix for your biggest time drain.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,300;0,400;0,700;1,300&family=Barlow+Condensed:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap">
+
+<style>
+:root {
+  --midnight:  #0A0E1A;
+  --midnight2: #060912;
+  --teal:      #4EFFD6;
+  --teal-dim:  rgba(78,255,214,0.07);
+  --violet:    #7B6EF6;
+  --gold:      #C9A84C;
+  --rose:      #FF6B6B;
+  --cloud:     #E8EAF0;
+  --muted:     #6B7A99;
+  --muted2:    #8892A4;
+  --card:      #111827;
+  --card2:     #0D1423;
+  --border:    #1E2A40;
+  --border2:   #243047;
+
+  --f-head: 'Clash Display', sans-serif;
+  --f-body: 'Chivo', sans-serif;
+  --f-ui:   'Barlow Condensed', sans-serif;
+  --f-mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--midnight);
+  color: var(--cloud);
+  font-family: var(--f-body);
+  font-weight: 300;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* grain */
+body::after {
+  content: ''; position: fixed; inset: 0; z-index: 9000; pointer-events: none; opacity: 0.22;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");
+}
+
+/* top bar */
+.top-bar {
+  height: 2px;
+  background: linear-gradient(90deg, var(--teal), var(--violet), transparent);
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+}
+
+::selection { background: var(--teal); color: var(--midnight); }
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+@media (max-width: 640px) { .container { padding: 0 20px; } }
+
+/* ── HEADER ──────────────────────────────────────── */
+.site-header {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0;
+  position: sticky;
+  top: 2px;
+  background: rgba(10, 14, 26, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 50;
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.logo-mark {
+  width: 28px; height: 28px;
+  background: var(--teal);
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.logo-mark svg { width: 14px; height: 14px; }
+
+.logo-name {
+  font-family: var(--f-ui);
+  font-size: 14px; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--cloud);
+}
+
+.logo-name em { color: var(--teal); font-style: normal; }
+
+.back-link {
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--f-ui); font-size: 11px; font-weight: 600;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--muted); text-decoration: none;
+  transition: color .15s;
+}
+
+.back-link:hover { color: var(--teal); }
+
+/* ── HERO ─────────────────────────────────────────── */
+.hero {
+  padding: 80px 0 64px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-glow {
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 700px; height: 350px; pointer-events: none;
+  background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(78,255,214,0.1) 0%, transparent 70%);
+}
+
+.eyebrow {
+  font-family: var(--f-ui); font-size: 11px; font-weight: 600;
+  letter-spacing: .28em; text-transform: uppercase; color: var(--teal);
+  margin-bottom: 16px;
+}
+
+.hero-title {
+  font-family: var(--f-head); font-size: clamp(40px, 6vw, 76px);
+  font-weight: 600; line-height: 0.92; letter-spacing: -.025em; color: #fff;
+  margin-bottom: 22px;
+}
+
+.hero-title em { color: var(--teal); font-style: normal; }
+
+.hero-sub {
+  font-family: var(--f-body); font-size: 16px; font-weight: 300;
+  color: var(--muted2); line-height: 1.7; max-width: 520px; margin-bottom: 32px;
+}
+
+.pricing-bar {
+  display: inline-flex; align-items: center; gap: 0;
+  background: var(--card2); border: 1px solid var(--border);
+  border-radius: 8px; overflow: hidden;
+}
+
+.pricing-bar-item {
+  padding: 10px 20px;
+  font-family: var(--f-mono); font-size: 11px; font-weight: 500;
+  display: flex; align-items: center; gap: 8px;
+  border-right: 1px solid var(--border);
+}
+
+.pricing-bar-item:last-child { border-right: none; }
+
+.pricing-bar-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+}
+
+/* ── FILTERS ──────────────────────────────────────── */
+.filters {
+  display: flex; gap: 8px;
+  overflow-x: auto; padding-bottom: 2px;
+  margin-bottom: 40px;
+  scrollbar-width: none;
+}
+
+.filters::-webkit-scrollbar { display: none; }
+
+.filter-btn {
+  font-family: var(--f-ui); font-size: 11px; font-weight: 700;
+  letter-spacing: .18em; text-transform: uppercase;
+  padding: 9px 18px; border-radius: 6px; cursor: pointer;
+  white-space: nowrap; transition: all .18s ease;
+  border: 1px solid var(--border2);
+  background: transparent; color: var(--muted);
+}
+
+.filter-btn.active {
+  background: var(--teal); color: var(--midnight);
+  border-color: var(--teal);
+}
+
+/* ── GRID ─────────────────────────────────────────── */
+.workflows-section { padding: 0 0 100px; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 16px;
+  margin-bottom: 56px;
+}
+
+@media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+
+.wf-card {
+  background: var(--card2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 26px 26px 22px;
+  display: flex; flex-direction: column; gap: 0;
+  transition: border-color .2s ease, box-shadow .25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.wf-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(78,255,214,0), transparent);
+  transition: background .3s ease;
+}
+
+.wf-card:hover {
+  border-color: rgba(78,255,214,0.35);
+  box-shadow: 0 0 40px -10px rgba(78,255,214,0.15);
+}
+
+.wf-card:hover::before {
+  background: linear-gradient(90deg, transparent, rgba(78,255,214,0.5), transparent);
+}
+
+.card-top {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.complexity-tag {
+  font-family: var(--f-ui); font-size: 9px; font-weight: 700;
+  letter-spacing: .22em; text-transform: uppercase;
+  padding: 3px 9px; border-radius: 4px;
+}
+
+.price-tag {
+  font-family: var(--f-mono); font-size: 18px; font-weight: 700;
+  color: #fff; letter-spacing: -.01em;
+}
+
+.price-tag span {
+  font-size: 10px; color: var(--muted); font-weight: 400; margin-right: 2px;
+}
+
+.wf-name {
+  font-family: var(--f-head); font-size: 21px; font-weight: 600;
+  color: #fff; line-height: 1.1; letter-spacing: -.02em;
+  margin-bottom: 14px;
+}
+
+/* flow diagram */
+.flow-row {
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.tool-pill {
+  display: inline-flex; align-items: center;
+  font-family: var(--f-ui); font-size: 10px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+  padding: 3px 8px; border-radius: 4px;
+  background: rgba(255,255,255,0.04); border: 1px solid var(--border2);
+  color: var(--muted2); white-space: nowrap;
+}
+
+.flow-arrow { color: var(--teal); font-size: 12px; flex-shrink: 0; }
+
+/* description */
+.wf-desc {
+  font-family: var(--f-body); font-size: 13.5px; font-weight: 300;
+  color: var(--muted2); line-height: 1.65;
+  margin-bottom: 18px; flex-grow: 1;
+}
+
+/* trigger */
+.wf-trigger {
+  display: flex; align-items: flex-start; gap: 8px;
+  padding: 10px 12px; border-radius: 6px;
+  background: rgba(78,255,214,0.04); border: 1px solid rgba(78,255,214,0.12);
+  margin-bottom: 16px;
+}
+
+.trigger-label {
+  font-family: var(--f-ui); font-size: 9px; font-weight: 700;
+  letter-spacing: .2em; text-transform: uppercase; color: var(--teal);
+  flex-shrink: 0; margin-top: 1px;
+}
+
+.trigger-text {
+  font-family: var(--f-mono); font-size: 11px; font-weight: 300;
+  color: var(--muted2); line-height: 1.5;
+}
+
+/* includes */
+.wf-includes {
+  margin-bottom: 20px;
+}
+
+.includes-label {
+  font-family: var(--f-ui); font-size: 9px; font-weight: 700;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 8px;
+}
+
+.includes-list {
+  list-style: none;
+  display: flex; flex-direction: column; gap: 5px;
+}
+
+.includes-list li {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--f-body); font-size: 12px; font-weight: 300;
+  color: var(--muted2); line-height: 1.4;
+}
+
+.includes-list li::before {
+  content: '';
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--teal); opacity: .6;
+  flex-shrink: 0;
+}
+
+/* CTA */
+.btn-cta {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; padding: 12px 16px;
+  font-family: var(--f-ui); font-size: 11px; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  background: transparent; color: var(--cloud);
+  border: 1px solid var(--border2); border-radius: 8px;
+  cursor: pointer; text-decoration: none;
+  transition: border-color .18s, color .18s, background .18s;
+}
+
+.btn-cta:hover {
+  border-color: var(--teal); color: var(--teal);
+  background: rgba(78,255,214,0.05);
+}
+
+.btn-cta .arrow { font-size: 14px; transition: transform .18s; }
+.btn-cta:hover .arrow { transform: translateX(3px); }
+
+/* hidden */
+.wf-card.hidden { display: none; }
+
+/* ── BUNDLE ───────────────────────────────────────── */
+.bundle {
+  background: var(--card2); border: 1px solid var(--border);
+  border-radius: 14px; padding: 30px 34px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 28px; flex-wrap: wrap;
+  margin-bottom: 60px;
+}
+
+.bundle-eyebrow {
+  font-family: var(--f-ui); font-size: 10px; font-weight: 700;
+  letter-spacing: .22em; text-transform: uppercase;
+  color: var(--teal); margin-bottom: 8px;
+}
+
+.bundle-title {
+  font-family: var(--f-head); font-size: 24px; font-weight: 600;
+  color: #fff; letter-spacing: -.02em; margin-bottom: 8px;
+}
+
+.bundle-sub {
+  font-family: var(--f-body); font-size: 14px; font-weight: 300;
+  color: var(--muted2); line-height: 1.6;
+}
+
+.bundle-sub strong { color: var(--cloud); font-weight: 400; }
+
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 13px 24px; border-radius: 6px;
+  font-family: var(--f-ui); font-size: 12px; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  background: var(--teal); color: var(--midnight);
+  text-decoration: none; white-space: nowrap; flex-shrink: 0;
+  transition: opacity .15s, transform .15s;
+}
+
+.btn-primary:hover { opacity: .9; transform: translateY(-1px); }
+
+/* ── GUARANTEE ────────────────────────────────────── */
+.guarantee {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+  margin-bottom: 60px;
+}
+
+.guarantee-item {
+  padding: 22px 24px;
+  background: var(--card2);
+}
+
+.guarantee-icon { font-size: 20px; margin-bottom: 10px; }
+
+.guarantee-title {
+  font-family: var(--f-head); font-size: 15px; font-weight: 600;
+  color: var(--cloud); margin-bottom: 4px;
+}
+
+.guarantee-text {
+  font-family: var(--f-body); font-size: 12.5px; font-weight: 300;
+  color: var(--muted2); line-height: 1.6;
+}
+
+/* ── FOOTER ───────────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 0 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 12px;
+}
+
+.ft-left {
+  font-family: var(--f-ui); font-size: 11px; font-weight: 500;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--muted);
+}
+
+.ft-right {
+  display: flex; gap: 20px; align-items: center;
+}
+
+.ft-link {
+  font-family: var(--f-mono); font-size: 11px; font-weight: 300;
+  color: var(--muted); text-decoration: none; transition: color .15s;
+}
+
+.ft-link:hover { color: var(--teal); }
+
+/* count badge */
+.count-badge {
+  font-family: var(--f-mono); font-size: 11px; font-weight: 400;
+  color: var(--muted); margin-left: 4px;
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar"></div>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="container">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-mark">
+          <svg viewBox="0 0 14 14" fill="none">
+            <circle cx="7" cy="7" r="5.5" stroke="#0A0E1A" stroke-width="1.5"/>
+            <path d="M7 4v3l2 1.5" stroke="#0A0E1A" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="logo-name">Tempus <em>Flow</em></span>
+      </a>
+      <a href="index.html" class="back-link">
+        ← Back to site
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="container" style="position:relative;">
+    <div class="eyebrow">Workflow Library</div>
+    <h1 class="hero-title">Pick your <em>exact</em> fix.</h1>
+    <p class="hero-sub">
+      Every workflow below is built inside <strong style="color:var(--cloud);font-weight:400;">your</strong> Make.com account.
+      You own it permanently — whether you stay with us or not.
+    </p>
+    <div class="pricing-bar">
+      <div class="pricing-bar-item">
+        <div class="pricing-dot" style="width:6px;height:6px;border-radius:50%;background:var(--teal);flex-shrink:0;"></div>
+        <span style="font-family:var(--f-ui);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-right:2px;">Simple</span>
+        <span style="font-family:var(--f-mono);font-size:12px;color:#fff;font-weight:500;">$597</span>
+      </div>
+      <div class="pricing-bar-item">
+        <div class="pricing-dot" style="width:6px;height:6px;border-radius:50%;background:var(--violet);flex-shrink:0;"></div>
+        <span style="font-family:var(--f-ui);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-right:2px;">Medium</span>
+        <span style="font-family:var(--f-mono);font-size:12px;color:#fff;font-weight:500;">$897</span>
+      </div>
+      <div class="pricing-bar-item">
+        <div class="pricing-dot" style="width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;"></div>
+        <span style="font-family:var(--f-ui);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-right:2px;">Complex</span>
+        <span style="font-family:var(--f-mono);font-size:12px;color:#fff;font-weight:500;">$1,497</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKFLOWS -->
+<section class="workflows-section">
+  <div class="container">
+
+    <!-- FILTERS -->
+    <div class="filters" id="filters">
+      <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">All Workflows <span class="count-badge" id="count-all"></span></button>
+      <button class="filter-btn" data-filter="trades" onclick="setFilter('trades')">Trades &amp; Construction</button>
+      <button class="filter-btn" data-filter="realestate" onclick="setFilter('realestate')">Real Estate</button>
+      <button class="filter-btn" data-filter="health" onclick="setFilter('health')">Health &amp; Wellness</button>
+      <button class="filter-btn" data-filter="all-industries" onclick="setFilter('all-industries')">All Industries</button>
+    </div>
+
+    <!-- GRID -->
+    <div class="grid" id="workflow-grid">
+
+      <!-- 1 Missed Call → Auto SMS -->
+      <div class="wf-card" data-industry="trades">
+        <div class="card-top">
+          <span class="complexity-tag" style="background:rgba(78,255,214,0.07);border:1px solid rgba(78,255,214,0.22);color:var(--teal);">Simple</span>
+          <div class="price-tag"><span>AUD</span>$597</div>
+        </div>
+        <div class="wf-name">Missed Call → Auto SMS</div>
+        <div class="flow-row">
+          <span class="tool-pill">Phone</span>
+          <span class="flow-arrow">→</span>
+          <span class="tool-pill">SMS</span>
+        </div>
+        <p class="wf-desc">Fires a personalised SMS within 60 seconds of a missed call. The message uses the caller's name where available and links directly to your booking page. No lead escapes.</p>
+        <div class="wf-trigger">
+          <span class="trigger-label">Trigger</span>
+          <span class="trigger-text">Missed inbound call detected on your business number</span>
+        </div>
+        <div class="wf-includes">
+          <div class="includes-label">What's included</div>
+          <ul class="includes-list">
+            <li>Personalised SMS template (editable)</li>
+            <li>60-second fire time target</li>
+            <li>Built inside your Make.com account</li>
+            <li>Loom walkthrough on delivery</li>
+            <li>14-day support window</li>
+          </ul>
+        </div>
+        <a href="index.html#audit" class="btn-cta">Get This Workflow <span class="arrow">→</span></a>
+      </div>
+
+      <!-- 2 Invoice Chase Sequence -->
+      <div class="wf-card" data-industry="trades">
+        <div class="card-top">
+          <span class="complexity-tag" style="background:rgba(123,110,246,0.08);border:1px solid rgba(123,110,246,0.28);color:var(--violet);">Medium</span>
+          <div class="price-tag"><span>AUD</span>$897</div>
+        </div>
+        <div class="wf-name">Invoice Chase Sequence</div>
+        <div class="flow-row">
+          <span class="tool-pill">Xero</span>
+          <span class="flow-arrow">→</span>
+          <span class="tool-pill">Gmail</span>
+          <span class="tool-pill">SMS</span>
+        </div>
+        <p class="wf-desc">Three-stage payment reminders fire automatically — 3 days before due, on the due date, and 7 days overdue. Stops you chasing money manually and cuts average payment time significantly.</p>
+        <div class="wf-trigger">
+          <span class="trigger-label">Trigger</span>
+          <span class="trigger-text">Invoice created or due date approaching in Xero</span>
+        </div>
+        <div class="wf-includes">
+          <div class="includes-label">What's included</div>
+          <ul class="includes-list">
+            <li>3-stage reminder sequence (email + optional SMS)</li>
+            <li>Customised email templates for each stage</li>
+            <li>Xero integration configured</li>
+            <li>Built inside your Make.com account</li>
+            <li>Loom walkthrough on delivery</li>
+            <li>14-day support window</li>
+          </ul>
+        </div>
+        <a href="index.html#audit" class="btn-cta">Get This Workflow <span class="arrow">→</span></a>
+      </div>
+
+      <!-- 3 Quote Follow-Up -->
+      <div class="wf-card" data-industry="trades">
+        <div class="card-top">
+          <span class="complexity-tag" style="background:rgba(123,110,246,0.08);border:1px solid rgba(123,110,246,0.28);color:var(--violet);">Medium</span>
+          <div class="price-tag"><span>AUD</span>$897</div>
+        </div>
+        <div class="wf-name">Quote Follow-Up Sequence</div>
+        <div class="flow-row">
+          <span class="tool-pill">ServiceM8</span>
+          <span class="flow-arrow">→</span>
+          <span class="tool-pill">Gmail</span>
+        </div>
+        <p class="wf-desc">Auto-nudges a prospect at 3 days and again at 7 days if your quote sits unopened. Personalised emails feel hand-written — because the content is pulled from the quote itself.</p>
+        <div class="wf-trigger">
+          <span class="trigger-label">Trigger</span>
+          <span class="trigger-text">Quote sent in ServiceM8 with no response after 3 days</span>
+        </div>
+        <div class="wf-includes">
+          <div class="includes-label">What's included</div>
+          <ul class="includes-list">
+            <li>Two-touch follow-up sequence (day 3, day 7)</li>
+            <li>Personalised email templates</li>
+            <li>ServiceM8 integration configured</li>
+            <li>Built inside your Make.com account</li>
+            <li>Loom walkthrough on delivery</li>
+            <li>14-day support window</li>
+          </ul>
+        </div>
+        <a href="index.html#audit" class="btn-cta">Get This Workflow <span class="arrow">→</span></a>
+      </div>
+
+      <!-- 4 Job Booking Confirmation -->
+      <div class="wf-card" data-industry="trades">
+        <div class="card-top">
+          <span class="complexity-tag" style="background:rgba(78,255,214,0.07);border:1px solid rgba(78,255,214,0.22);color:var(--teal);">Simple</span>
+          <div class="price-tag"><span>AUD</span>$597</div>
+        </div>
+        <div class="wf-name">Job Booking Confirmation + Reminder</div>
+        <div class="flow-row">
+          <span class="tool-pill">ServiceM8</span>
+          <span class="flow-arrow">→</span>
+          <span class="tool-pill">SMS</span>
+          <span class="tool-pill">Email</span>
+        </div>
+        <p class="wf-desc">Sends a confirmation the moment a job is booked, then a 24-hour reminder before the appointment. Cuts no-shows dramatically and makes your business look polished.</p>
+        <div class="wf-trigger">
+          <span class="trigger-label">Trigger</span>
+          <span class="trigger-text">Job created and scheduled in ServiceM8</span>
+        </div>
+        <div class="wf-includes">
+          <div class="includes-label">What's included</div>
+          <ul class="includes-list">
+            <li>Instant booking confirmation (SMS + email)</li>
+            <li>24-hour reminder (SMS)</li>
+            <li>ServiceM8 integration configured</li>
+            <li>Built inside your Make.com account</li>
+            <li>Loom walkthrough on delivery</li>
+            <li>14-day support window</li>
+          </ul>
+        </div>
+        <a href="index.html#audit" class="btn-cta">Get This Workflow <span class="arrow">→</span></a>
+      </div>
+
+      <!-- 5 Google Review Request -->
+      <div class="wf-card" data-industry="trades">
+        <div class="card-top">
+          <span class="complexity-tag" style="background:rgba(78,255,214,0.07);border:1px solid rgba(78,255,214,0.22);color:var(--teal);">Simple</span>
+          <div class="price-tag"><span>AUD</span>$597</div>
+        </div>
+        <div class="wf-name">Google Review Request</div>
+        <div class="flow-row">
+          <span class="tool-pill">ServiceM8</span>
+          <span class="flow-arrow">→</span>
+          <span class="tool-pill">SMS</span>
+        </div>
+        <p class="wf-desc">Auto-fires a review request the moment a job is marked complete. Uses the client's name and links directly to your Google Business review page. The best time to ask is right when they're happy — this makes sure you never miss it.</p>
+        <div class="wf-trigger">
+          <span class="trigger-label">Trigger</span>
+          <span class="trigger-text">Job marked "Complete" in ServiceM8</span>
+        </div>
+        <div class="wf-includes">
+          <div class="includes-label">What's included</div>
+          <ul class="includes-list">
+            <li>Personalised review request SMS</li>
+            <li>Direct link to your Google review page</li>
+            <li>ServiceM8 integration configured</li>
+            <li>Built inside your Make.com account</li>
+            <li>Loom walkthrough on delivery</li>
+            <li>14-day support window</li>
+          </ul>
+        </div>
+        <a href="index.html#audit" class="btn-cta">Get This Workflow <span class="arrow">→</span></a>
+      </div>
+
+      <!-- 6 New Lead → CRM -->
+      <div class="wf-card" data-industry="all-industries">
+        <div class="card-top">
+          <span class="complexity-tag" style="background:rgba(123,110,246,0.08);border:1px solid rgba(123,110,246,0.28);color:var(--violet);">Medium</span>
+          <div class="price-tag"><span>AUD</span>$897</div>
+        </div>
+        <div class="wf-name">New Lead → CRM + Auto Reply</div>
+        <div class="flow-row">
+          <span class="tool-pill">Website</span>
+          <span class="tool-pill">Facebook</span>
+          <span class="flow-arrow">→</span>
+          <span class="tool-pill">Airtable</span>
+          <span class="tool-pill">SMS</span>
+        </div>
+        <p class="wf-desc">Every form submission or Facebook Lead Ad hit creates a CRM record and fires an instant SMS acknowledgment — within 2 minutes. First to reply wins the job. Stop losing leads to competitors who move faster.</p>
+        <div class="wf-trigger">
+          <span class="trigger-label">Trigger</span>
+          <span class="trigger-text">New form submission on website or Facebook Lead Ad received</span>
+        </div>
+        <div class="wf-includes">
+          <div class="includes-label">What's included</div>
+          <ul class="includes-list">
+            <li>Instant CRM record creation (Airtable)</li>
+            <li>Personalised auto-reply SMS under 2 minutes</li>
+            <li>Website form + Facebook Lead Ads configured</li>
+            <li>Built inside your Make.com account</li>
+            <li>Loom walkthrough on delivery</li>
+            <li>14-day support window</li>
+          </ul>
+        </div>
+        <a href="index.html#audit" class="btn-cta">Get This Workflow <span class="arrow">→</span></a>
+      </div>
+
+      <!-- 7 Client Onboarding -->
+      <div class="wf-card" data-industry="all-industries">
+        <div class="card-top">
+          <span class="complexity-tag" style="background:rgba(123,110,246,0.08);border:1px solid rgba(123,110,246,0.28);color:var(--violet);">Medium</span>
+          <div class="price-tag"><span>AUD</span>$897</div>
+        </div>
+        <div class="wf-name">Client Onboarding Delivery</div>
+        <div class="flow-row">
+          <span class="tool-pill">Stripe</span>
+          <span class="flow-arrow">→</span>
+          <span class="tool-pill">Gmail</span>
+          <span class="tool-pill">Airtable</span>
+        </div>
+        <p class="wf-desc">Payment confirmed → welcome email, discovery form, and Calendly link fired in one chain. Creates the CRM record automatically. The client feels looked after from minute one, without you lifting a finger.</p>
+        <div class="wf-trigger">
+          <span class="trigger-label">Trigger</span>
+          <span class="trigger-text">Stripe payment confirmed for a new client</span>
+        </div>
+        <div class="wf-includes">
+          <div class="includes-label">What's included</div>
+          <ul class="includes-list">
+            <li>Welcome email with discovery form + Calendly link</li>
+            <li>Automatic CRM record creation (Airtable)</li>
+            <li>Stripe + Gmail integration configured</li>
+            <li>Built inside your Make.com account</li>
+            <li>Loom walkthrough on delivery</li>
+            <li>14-day support window</li>
+          </ul>
+        </div>
+        <a href="index.html#audit" class="btn-cta">Get This Workflow <span class="arrow">→</span></a>
+      </div>
+
+      <!-- 8 Weekly Performance Report -->
+      <div class="wf-card" data-industry="all-industries">
+        <div class="card-top">
+          <span class="complexity-tag" style="background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.28);color:var(--gold);">Complex</span>
+          <div class="price-tag"><span>AUD</span>$1,497</div>
+        </div>
+        <div class="wf-name">Weekly Performance Report</div>
+        <div class="flow-row">
+          <span class="tool-pill">Airtable</span>
+          <span class="tool-pill">Xero</span>
+          <span class="flow-arrow">→</span>
+          <span class="tool-pill">Gmail</span>
+        </div>
+        <p class="wf-desc">Pulls data across your tools every Friday and emails a formatted business summary to your inbox — revenue, outstanding invoices, leads, jobs completed. The CEO view you never had time to build manually.</p>
+        <div class="wf-trigger">
+          <span class="trigger-label">Trigger</span>
+          <span class="trigger-text">Scheduled — every Friday at a time you choose</span>
+        </div>
+        <div class="wf-includes">
+          <div class="includes-label">What's included</div>
+          <ul class="includes-list">
+            <li>Custom report template built to your data</li>
+            <li>Data pulled from Airtable + Xero (or your tools)</li>
+            <li>Formatted HTML email with sections and totals</li>
+            <li>Built inside your Make.com account</li>
+            <li>Loom walkthrough on delivery</li>
+            <li>14-day support window</li>
+          </ul>
+        </div>
+        <a href="index.html#audit" class="btn-cta">Get This Workflow <span class="arrow">→</span></a>
+      </div>
+
+      <!-- 9 New Rental Enquiry -->
+      <div class="wf-card" data-industry="realestate">
+        <div class="card-top">
+          <span class="complexity-tag" style="background:rgba(123,110,246,0.08);border:1px solid rgba(123,110,246,0.28);color:var(--violet);">Medium</span>
+          <div class="price-tag"><span>AUD</span>$897</div>
+        </div>
+        <div class="wf-name">New Rental Enquiry Response</div>
+        <div class="flow-row">
+          <span class="tool-pill">Website</span>
+          <span class="flow-arrow">→</span>
+          <span class="tool-pill">CRM</span>
+          <span class="tool-pill">Gmail</span>
+        </div>
+        <p class="wf-desc">Captures rental enquiries from your website, creates the CRM record, and fires a personalised reply within 2 minutes. Tenants feel responded to immediately — and you never lose an enquiry to the inbox again.</p>
+        <div class="wf-trigger">
+          <span class="trigger-label">Trigger</span>
+          <span class="trigger-text">Rental enquiry submitted via website form</span>
+        </div>
+        <div class="wf-includes">
+          <div class="includes-label">What's included</div>
+          <ul class="includes-list">
+            <li>Instant personalised email reply under 2 minutes</li>
+            <li>CRM record created automatically</li>
+            <li>Website form integration configured</li>
+            <li>Built inside your Make.com account</li>
+            <li>Loom walkthrough on delivery</li>
+            <li>14-day support window</li>
+          </ul>
+        </div>
+        <a href="index.html#audit" class="btn-cta">Get This Workflow <span class="arrow">→</span></a>
+      </div>
+
+      <!-- 10 Inspection Reminder -->
+      <div class="wf-card" data-industry="realestate">
+        <div class="card-top">
+          <span class="complexity-tag" style="background:rgba(123,110,246,0.08);border:1px solid rgba(123,110,246,0.28);color:var(--violet);">Medium</span>
+          <div class="price-tag"><span>AUD</span>$897</div>
+        </div>
+        <div class="wf-name">Inspection Reminder Sequence</div>
+        <div class="flow-row">
+          <span class="tool-pill">Calendar</span>
+          <span class="flow-arrow">→</span>
+          <span class="tool-pill">SMS</span>
+          <span class="tool-pill">Email</span>
+        </div>
+        <p class="wf-desc">Reminds both the landlord and tenant 48 hours before every scheduled inspection — automatically, every time, without anyone having to remember. No more no-shows, no more rescheduling chaos.</p>
+        <div class="wf-trigger">
+          <span class="trigger-label">Trigger</span>
+          <span class="trigger-text">Inspection event in calendar — 48 hours prior</span>
+        </div>
+        <div class="wf-includes">
+          <div class="includes-label">What's included</div>
+          <ul class="includes-list">
+            <li>48-hour reminder to landlord (SMS + email)</li>
+            <li>48-hour reminder to tenant (SMS + email)</li>
+            <li>Calendar integration configured</li>
+            <li>Built inside your Make.com account</li>
+            <li>Loom walkthrough on delivery</li>
+            <li>14-day support window</li>
+          </ul>
+        </div>
+        <a href="index.html#audit" class="btn-cta">Get This Workflow <span class="arrow">→</span></a>
+      </div>
+
+      <!-- 11 Landlord Monthly Report -->
+      <div class="wf-card" data-industry="realestate">
+        <div class="card-top">
+          <span class="complexity-tag" style="background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.28);color:var(--gold);">Complex</span>
+          <div class="price-tag"><span>AUD</span>$1,497</div>
+        </div>
+        <div class="wf-name">Landlord Monthly Report</div>
+        <div class="flow-row">
+          <span class="tool-pill">Airtable</span>
+          <span class="flow-arrow">→</span>
+          <span class="tool-pill">Gmail PDF</span>
+        </div>
+        <p class="wf-desc">Compiles rent status, maintenance log, and vacancy data into a clean formatted report — automatically sent to each landlord every month. A service that used to take your team hours now happens while you sleep.</p>
+        <div class="wf-trigger">
+          <span class="trigger-label">Trigger</span>
+          <span class="trigger-text">Monthly schedule (date you choose) per property/landlord</span>
+        </div>
+        <div class="wf-includes">
+          <div class="includes-label">What's included</div>
+          <ul class="includes-list">
+            <li>Custom report format with rent, maintenance, vacancies</li>
+            <li>Personalised per landlord — scales to any portfolio size</li>
+            <li>Airtable data structure set up for you</li>
+            <li>Built inside your Make.com account</li>
+            <li>Loom walkthrough on delivery</li>
+            <li>14-day support window</li>
+          </ul>
+        </div>
+        <a href="index.html#audit" class="btn-cta">Get This Workflow <span class="arrow">→</span></a>
+      </div>
+
+      <!-- 12 Appointment Reminder -->
+      <div class="wf-card" data-industry="health">
+        <div class="card-top">
+          <span class="complexity-tag" style="background:rgba(123,110,246,0.08);border:1px solid rgba(123,110,246,0.28);color:var(--violet);">Medium</span>
+          <div class="price-tag"><span>AUD</span>$897</div>
+        </div>
+        <div class="wf-name">Appointment Reminder + No-Show Follow-Up</div>
+        <div class="flow-row">
+          <span class="tool-pill">Calendly</span>
+          <span class="flow-arrow">→</span>
+          <span class="tool-pill">SMS</span>
+          <span class="tool-pill">Email</span>
+        </div>
+        <p class="wf-desc">24-hour appointment reminder fires automatically, then an intelligent follow-up if the client doesn't show. Keeps your chair full and your no-show rate down without any manual tracking.</p>
+        <div class="wf-trigger">
+          <span class="trigger-label">Trigger</span>
+          <span class="trigger-text">Appointment booked via Calendly — reminder fires 24hrs prior</span>
+        </div>
+        <div class="wf-includes">
+          <div class="includes-label">What's included</div>
+          <ul class="includes-list">
+            <li>24-hour reminder (SMS + email)</li>
+            <li>No-show follow-up message (fired after missed slot)</li>
+            <li>Calendly integration configured</li>
+            <li>Built inside your Make.com account</li>
+            <li>Loom walkthrough on delivery</li>
+            <li>14-day support window</li>
+          </ul>
+        </div>
+        <a href="index.html#audit" class="btn-cta">Get This Workflow <span class="arrow">→</span></a>
+      </div>
+
+    </div><!-- /grid -->
+
+    <!-- BUNDLE -->
+    <div class="bundle">
+      <div>
+        <div class="bundle-eyebrow">Bundle &amp; Save</div>
+        <div class="bundle-title">Need more than one?</div>
+        <p class="bundle-sub">
+          Grab 3 workflows for <strong>$2,197</strong> or all 6 for <strong>$3,997</strong> — saving up to $1,785 off individual pricing.
+          Bundled builds are delivered as a single project with one Loom walkthrough per workflow.
+        </p>
+      </div>
+      <a href="index.html#pricing" class="btn-primary">See Packages →</a>
+    </div>
+
+    <!-- GUARANTEE STRIP -->
+    <div class="guarantee">
+      <div class="guarantee-item">
+        <div class="guarantee-icon">🔒</div>
+        <div class="guarantee-title">You own it forever</div>
+        <p class="guarantee-text">Every workflow lives in your Make.com account. No ongoing licence. No hostage software.</p>
+      </div>
+      <div class="guarantee-item">
+        <div class="guarantee-icon">🎬</div>
+        <div class="guarantee-title">Loom on delivery</div>
+        <p class="guarantee-text">A full video walkthrough of exactly how your workflow works — so you understand it, not just use it.</p>
+      </div>
+      <div class="guarantee-item">
+        <div class="guarantee-icon">🛠</div>
+        <div class="guarantee-title">14-day support</div>
+        <p class="guarantee-text">If anything breaks or needs adjusting after delivery, I fix it. No extra charge.</p>
+      </div>
+      <div class="guarantee-item">
+        <div class="guarantee-icon">⚡</div>
+        <div class="guarantee-title">Fast turnaround</div>
+        <p class="guarantee-text">Simple workflows in 3–5 business days. Medium in 5–8. Complex in 8–12. You'll know the timeline upfront.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;width:100%;">
+    <div class="ft-left">Tempus Flow · tempusflow.com.au</div>
+    <div class="ft-right">
+      <a href="index.html" class="ft-link">← Home</a>
+      <a href="index.html#pricing" class="ft-link">Pricing</a>
+      <a href="index.html#audit" class="ft-link">Book a Free Review</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const FILTER_MAP = {
+    'all': null,
+    'trades': 'trades',
+    'realestate': 'realestate',
+    'health': 'health',
+    'all-industries': 'all-industries',
+  };
+
+  function setFilter(key) {
+    // Update button states
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.filter === key);
+    });
+
+    // Show/hide cards
+    const cards = document.querySelectorAll('.wf-card');
+    cards.forEach(card => {
+      const industry = card.dataset.industry;
+      let visible = false;
+
+      if (key === 'all') {
+        visible = true;
+      } else if (key === 'all-industries') {
+        visible = industry === 'all-industries';
+      } else {
+        visible = industry === key || industry === 'all-industries';
+      }
+
+      card.classList.toggle('hidden', !visible);
+    });
+  }
+
+  // Init count
+  const total = document.querySelectorAll('.wf-card').length;
+  document.getElementById('count-all').textContent = total;
+</script>
+</body>
+</html>
